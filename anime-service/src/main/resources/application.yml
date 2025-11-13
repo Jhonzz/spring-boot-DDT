@@ -1,7 +1,15 @@
 spring:
   application:
     name: anime-service
+  threads:
+    virtual:
+      enabled: true
 
 server:
   servlet:
     context-path: /
+  error:
+    include-stacktrace: ON_PARAM #?trace=true
+  tomcat:
+    threads:
+      max: 20

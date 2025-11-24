@@ -3,7 +3,9 @@ package academy.devdojo.controller;
 import academy.devdojo.domain.Producer;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -34,10 +36,10 @@ public class ProducerController {
 
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE,
             headers = "x-api-key")
-    public Producer saveAnime(@RequestBody Producer producer, @RequestHeader HttpHeaders headers) {
+    public ResponseEntity<Producer> saveAnime(@RequestBody Producer producer, @RequestHeader HttpHeaders headers) {
         log.info("HEADERS>>>>>>>>>>>>>>> {}", headers);
         producer.setId(ThreadLocalRandom.current().nextLong(1, 1000));
         Producer.getProducers().add(producer);
-        return producer;
+        return ResponseEntity.status(HttpStatus.CREATED).body(producer);
     }
 }

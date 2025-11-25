@@ -1,6 +1,9 @@
 package academy.devdojo.controller;
 
+import academy.devdojo.DTO.request.ProducerPostRequest;
+import academy.devdojo.DTO.response.ProducerGetResponse;
 import academy.devdojo.domain.Producer;
+import academy.devdojo.mapper.ProducerMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -9,13 +12,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.concurrent.ThreadLocalRandom;
 
 @RestController
 @RequestMapping("v1/producers")
 @Slf4j
 public class ProducerController {
-
+    private static final ProducerMapper MAPPER = ProducerMapper.INSTANCE;
     @GetMapping()
     public List<Producer> listAllProducers(@RequestParam(required = false) String producerName) {
         if (producerName == null) {
@@ -36,10 +38,13 @@ public class ProducerController {
 
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE,
             headers = "x-api-key")
-    public ResponseEntity<Producer> saveAnime(@RequestBody Producer producer, @RequestHeader HttpHeaders headers) {
-        log.info("HEADERS>>>>>>>>>>>>>>> {}", headers);
-        producer.setId(ThreadLocalRandom.current().nextLong(1, 1000));
+    public ResponseEntity<ProducerGetResponse> saveAnime(@RequestBody ProducerPostRequest producerPostRequest, @RequestHeader HttpHeaders headers) {
+
+        Producer producer = MAPPER.toProducer(producerPostRequest);
+        ProducerGetResponse response = MAPPER.toProducerGetResponse(producer);
+
         Producer.getProducers().add(producer);
-        return ResponseEntity.status(HttpStatus.CREATED).body(producer);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 }

@@ -27,13 +27,16 @@ public class ProducerController {
     }
 
     @GetMapping("{id}")
-    public Producer findById(@PathVariable Long id) {
-        return Producer.
+    public ProducerGetResponse findById(@PathVariable Long id) {
+
+        Producer producer = Producer.
                 getProducers().
                 stream().
                 filter(Producer -> id.equals(Producer.getId())).
                 findFirst().
                 orElse(null);
+
+        return MAPPER.toProducerGetResponse(producer);
     }
 
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE,

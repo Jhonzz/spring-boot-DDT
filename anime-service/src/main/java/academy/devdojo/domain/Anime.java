@@ -1,6 +1,5 @@
 package academy.devdojo.domain;
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.Getter;
@@ -8,7 +7,6 @@ import lombok.Getter;
 import java.util.ArrayList;
 import java.util.List;
 
-@AllArgsConstructor
 @Data
 @Builder
 public class Anime {
@@ -19,10 +17,10 @@ public class Anime {
     private static List<Anime> animes = new ArrayList<>();
 
     static {
-        Anime berserk = new Anime(1L, "Berserk");
-        Anime dandadan = new Anime(2L, "Dandadan");
-        Anime dragonBall = new Anime(3L, "Dragon ball");
-        Anime naruto = new Anime(4L, "Naruto");
+        Anime berserk = Anime.builder().id(1L).name("Berserk").build();
+        Anime dandadan = Anime.builder().id(2L).name("Dandadan").build();
+        Anime dragonBall = Anime.builder().id(3L).name("Dragon ball").build();
+        Anime naruto = Anime.builder().id(4L).name("Naruto").build();
         animes.addAll(List.of(berserk, dandadan, dragonBall, naruto));
     }
 }

@@ -5,6 +5,9 @@ spring:
     virtual:
       enabled: true
 
+logging:
+  level:
+    academy-devdojo: debug
 server:
   servlet:
     context-path: /

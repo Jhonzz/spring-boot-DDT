@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -18,6 +19,7 @@ import java.util.List;
 @Slf4j
 public class ProducerController {
     private static final ProducerMapper MAPPER = ProducerMapper.INSTANCE;
+
     @GetMapping()
     public ResponseEntity<List<ProducerGetResponse>> listAllProducers(@RequestParam(required = false) String producerName) {
 
@@ -38,7 +40,7 @@ public class ProducerController {
                 stream().
                 filter(producers -> id.equals(producers.getId())).
                 findFirst().
-                orElse(null);
+                orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Producer not found"));
 
         return ResponseEntity.ok(MAPPER.toProducerGetResponse(producer));
     }
@@ -53,5 +55,18 @@ public class ProducerController {
         Producer.getProducers().add(producer);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
+    }
+
+    @DeleteMapping("{id}")
+    public ResponseEntity<Void> deleteById(@PathVariable Long id) {
+        log.info("Deleting producer by id: {}", id);
+        Producer producerToDelete = Producer.getProducers().
+                stream().
+                filter(producers -> id.equals(producers.getId())).
+                findFirst().
+                orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Producer not found"));
+        Producer.getProducers().remove(producerToDelete);
+
+        return ResponseEntity.noContent().build();
     }
 }

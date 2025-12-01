@@ -19,24 +19,28 @@ import java.util.List;
 public class ProducerController {
     private static final ProducerMapper MAPPER = ProducerMapper.INSTANCE;
     @GetMapping()
-    public List<Producer> listAllProducers(@RequestParam(required = false) String producerName) {
-        if (producerName == null) {
-            return Producer.getProducers();
-        }
-        return Producer.getProducers().stream().filter(producer -> producerName.equalsIgnoreCase(producer.getName())).toList();
+    public ResponseEntity<List<ProducerGetResponse>> listAllProducers(@RequestParam(required = false) String producerName) {
+
+        List<ProducerGetResponse> producerGetResponseList = MAPPER.toProducerGetResponseList(Producer.getProducers());
+        if (producerName == null) return ResponseEntity.ok(producerGetResponseList);
+
+        List<Producer> producerList = Producer.getProducers().stream().filter(producer -> producerName.equalsIgnoreCase(producer.getName())).toList();
+        List<ProducerGetResponse> response = MAPPER.toProducerGetResponseList(producerList);
+
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("{id}")
-    public ProducerGetResponse findById(@PathVariable Long id) {
+    public ResponseEntity<ProducerGetResponse> findById(@PathVariable Long id) {
 
         Producer producer = Producer.
                 getProducers().
                 stream().
-                filter(Producer -> id.equals(Producer.getId())).
+                filter(producers -> id.equals(producers.getId())).
                 findFirst().
                 orElse(null);
 
-        return MAPPER.toProducerGetResponse(producer);
+        return ResponseEntity.ok(MAPPER.toProducerGetResponse(producer));
     }
 
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE,

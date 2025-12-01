@@ -1,7 +1,6 @@
 package academy.devdojo.DTO.response;
 
 import lombok.Data;
-import lombok.ToString;
 
 @Data
 public class AnimePostResponse {

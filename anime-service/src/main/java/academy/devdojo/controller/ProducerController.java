@@ -1,7 +1,9 @@
 package academy.devdojo.controller;
 
 import academy.devdojo.DTO.request.ProducerPostRequest;
+import academy.devdojo.DTO.request.ProducerPutRequest;
 import academy.devdojo.DTO.response.ProducerGetResponse;
+import academy.devdojo.domain.Anime;
 import academy.devdojo.domain.Producer;
 import academy.devdojo.mapper.ProducerMapper;
 import lombok.extern.slf4j.Slf4j;
@@ -68,5 +70,22 @@ public class ProducerController {
         Producer.getProducers().remove(producerToDelete);
 
         return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping
+    public ResponseEntity<ProducerPutRequest> update(@RequestBody ProducerPutRequest request) {
+        log.info("Trying update producer by id: {}", request.getId());
+
+        var producerToRemove = Producer.getProducers().
+                stream().
+                filter(producer -> request.getId().equals(producer.getId())).
+                findFirst().
+                orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Producer not found"));
+
+        Producer.getProducers().remove(producerToRemove);
+        Producer producerUpdated = MAPPER.toProducer(request, producerToRemove.getCreatedAt());
+        Producer.getProducers().add(producerUpdated);
+
+        return ResponseEntity.ok(request);
     }
 }

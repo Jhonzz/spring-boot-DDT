@@ -52,4 +52,18 @@ public class AnimeController {
         var response = MAPPER.toPostAnimeResponse(anime);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
+
+    @DeleteMapping("{id}")
+    public ResponseEntity<Void> deleteAnime(@PathVariable Long id){
+        log.info("Deleting anime by id: {}", id);
+
+        var animeToDelete = Anime.getAnimes().
+                stream().
+                filter(anime -> id.equals(anime.getId())).
+                findFirst().
+                orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Anime not found"));
+
+        Anime.getAnimes().remove(animeToDelete);
+        return ResponseEntity.noContent().build();
+    }
 }

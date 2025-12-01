@@ -1,5 +1,6 @@
 package academy.devdojo.controller;
 
+import academy.devdojo.DTO.request.AnimePutRequest;
 import academy.devdojo.DTO.request.AnimePostRequest;
 import academy.devdojo.DTO.response.AnimeGetResponse;
 import academy.devdojo.DTO.response.AnimePostResponse;
@@ -65,5 +66,21 @@ public class AnimeController {
 
         Anime.getAnimes().remove(animeToDelete);
         return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping
+    public ResponseEntity<AnimePutRequest> update(@RequestBody AnimePutRequest request){
+
+        var animeToRemove = Anime.getAnimes().
+                stream().
+                filter(anime -> request.getId().equals(anime.getId())).
+                findFirst().
+                orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Anime not found"));
+
+        var animeUpdated = MAPPER.toAnime(request);
+        Anime.getAnimes().remove(animeToRemove);
+        Anime.getAnimes().add(animeUpdated);
+
+        return ResponseEntity.ok(request);
     }
 }

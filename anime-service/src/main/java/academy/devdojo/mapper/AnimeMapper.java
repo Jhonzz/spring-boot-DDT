@@ -1,5 +1,6 @@
 package academy.devdojo.mapper;
 
+import academy.devdojo.DTO.request.AnimePutRequest;
 import academy.devdojo.DTO.request.AnimePostRequest;
 import academy.devdojo.DTO.response.AnimeGetResponse;
 import academy.devdojo.DTO.response.AnimePostResponse;
@@ -16,10 +17,12 @@ public interface AnimeMapper {
 
     @Mapping(target = "id", expression = "java(java.util.concurrent.ThreadLocalRandom.current().nextLong(100_000))")
     Anime toAnime(AnimePostRequest animePostRequest);
+    Anime toAnime(AnimePutRequest animePutRequest);
 
     AnimePostResponse toPostAnimeResponse(Anime anime);
 
     AnimeGetResponse toAnimeResponse(Anime anime);
 
     List<AnimeGetResponse> toAnimeResponseList(List<Anime> animes);
+
 }

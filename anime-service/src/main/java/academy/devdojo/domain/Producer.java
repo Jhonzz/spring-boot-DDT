@@ -20,14 +20,4 @@ public class Producer {
     @JsonProperty("name")
     private String name;
     private LocalDateTime createdAt;
-
-    @Getter
-    private static List<Producer> producers = new ArrayList<>();
-
-    static {
-        Producer mappa = Producer.builder().id(1L).name("Mappa").createdAt(LocalDateTime.now()).build();
-        Producer saru = Producer.builder().id(2L).name("Saru").createdAt(LocalDateTime.now()).build();
-        Producer madhouse = Producer.builder().id(3L).name("Madhouse").createdAt(LocalDateTime.now()).build();
-        producers.addAll(List.of(mappa, saru, madhouse));
-    }
 }

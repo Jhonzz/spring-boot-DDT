@@ -2,15 +2,13 @@ package academy.devdojo.repository;
 
 import academy.devdojo.domain.Producer;
 import lombok.Getter;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class ProducerHardCoded {
+public class ProducerHardCodedRepository {
     @Getter
     private static final List<Producer> PRODUCERS = new ArrayList<>();
 
@@ -21,7 +19,7 @@ public class ProducerHardCoded {
         PRODUCERS.addAll(List.of(mappa, saru, madhouse));
     }
 
-    public static List<Producer> findAll() {
+    public List<Producer> findAll() {
         return PRODUCERS;
     }
 

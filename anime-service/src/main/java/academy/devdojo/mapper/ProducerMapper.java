@@ -3,6 +3,8 @@ package academy.devdojo.mapper;
 import academy.devdojo.DTO.request.ProducerPostRequest;
 import academy.devdojo.DTO.request.ProducerPutRequest;
 import academy.devdojo.DTO.response.ProducerGetResponse;
+import academy.devdojo.DTO.response.ProducerPostResponse;
+import academy.devdojo.DTO.response.ProducerPutResponse;
 import academy.devdojo.domain.Producer;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -21,6 +23,9 @@ public interface ProducerMapper {
 
     ProducerGetResponse toProducerGetResponse(Producer producer);
 
-    List<ProducerGetResponse> toProducerGetResponseList(List<Producer> producers);
+    ProducerPostResponse toProducerPostResponse(Producer producer);
 
+    ProducerPutResponse toProducerPutResponse(Producer producer);
+
+    List<ProducerGetResponse> toProducerGetResponseList(List<Producer> producers);
 }

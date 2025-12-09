@@ -1,16 +1,17 @@
 package academy.devdojo.controller;
 
-import academy.devdojo.DTO.request.AnimePutRequest;
 import academy.devdojo.DTO.request.AnimePostRequest;
+import academy.devdojo.DTO.request.AnimePutRequest;
 import academy.devdojo.DTO.response.AnimeGetResponse;
 import academy.devdojo.DTO.response.AnimePostResponse;
+import academy.devdojo.DTO.response.AnimePutResponse;
 import academy.devdojo.domain.Anime;
 import academy.devdojo.mapper.AnimeMapper;
+import academy.devdojo.service.AnimeService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -19,38 +20,40 @@ import java.util.List;
 @Slf4j
 public class AnimeController {
     private static final AnimeMapper MAPPER = AnimeMapper.INSTANCE;
+    private final AnimeService service;
+
+    public AnimeController() {
+        this.service = new AnimeService();
+    }
 
     @GetMapping()
     public ResponseEntity<List<AnimeGetResponse>> listAllAnimes(@RequestParam(required = false) String animeName) {
-        List<AnimeGetResponse> animeResponseList = MAPPER.toAnimeResponseList(Anime.getAnimes());
-        if (animeName == null) return ResponseEntity.ok(animeResponseList);
 
-        List<AnimeGetResponse> animeFilter = animeResponseList.stream().filter(anime -> animeName.equalsIgnoreCase(anime.getName())).toList();
+        var animes = service.findAll(animeName);
+        var response = MAPPER.toAnimeResponseList(animes);
 
-        return ResponseEntity.ok(animeFilter);
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("{id}")
     public ResponseEntity<AnimeGetResponse> findById(@PathVariable Long id) {
         log.debug("Request to find anime by id {}", id);
 
-        var response = Anime.
-                getAnimes().
-                stream().
-                filter(anime -> id.equals(anime.getId())).
-                findFirst().
-                orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Anime not found"));
+        Anime animeFound = service.findByIdOrThrowNotFoundException(id);
+        AnimeGetResponse response = MAPPER.toAnimeResponse(animeFound);
 
-        return ResponseEntity.ok(MAPPER.toAnimeResponse(response));
+        return ResponseEntity.ok(response);
     }
 
     @PostMapping()
-    public ResponseEntity<AnimePostResponse> saveAnime(@RequestBody AnimePostRequest animeRequest) {
-        log.info("Trying create anime: {}", animeRequest.getName());
-        var anime = MAPPER.toAnime(animeRequest);
-        Anime.getAnimes().add(anime);
+    public ResponseEntity<AnimePostResponse> save(@RequestBody AnimePostRequest request) {
+        log.info("Trying create anime: {}", request.getName());
+        var anime = MAPPER.toAnime(request);
 
-        var response = MAPPER.toPostAnimeResponse(anime);
+        Anime animeSaved = service.save(anime);
+
+        var response = MAPPER.toPostAnimeResponse(animeSaved);
+
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
@@ -58,29 +61,16 @@ public class AnimeController {
     public ResponseEntity<Void> deleteAnime(@PathVariable Long id){
         log.info("Deleting anime by id: {}", id);
 
-        var animeToDelete = Anime.getAnimes().
-                stream().
-                filter(anime -> id.equals(anime.getId())).
-                findFirst().
-                orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Anime not found"));
+        service.delete(id);
 
-        Anime.getAnimes().remove(animeToDelete);
         return ResponseEntity.noContent().build();
     }
 
     @PutMapping
-    public ResponseEntity<AnimePutRequest> update(@RequestBody AnimePutRequest request){
-
-        var animeToRemove = Anime.getAnimes().
-                stream().
-                filter(anime -> request.getId().equals(anime.getId())).
-                findFirst().
-                orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Anime not found"));
-
-        var animeUpdated = MAPPER.toAnime(request);
-        Anime.getAnimes().remove(animeToRemove);
-        Anime.getAnimes().add(animeUpdated);
-
-        return ResponseEntity.ok(request);
+    public ResponseEntity<AnimePutResponse> update(@RequestBody AnimePutRequest request){
+        var animeToUpdate = MAPPER.toAnime(request);
+        service.update(animeToUpdate);
+        AnimePutResponse response = MAPPER.toAnimePutResponse(animeToUpdate);
+        return ResponseEntity.ok(response);
     }
 }

@@ -3,6 +3,8 @@ package academy.devdojo.controller;
 import academy.devdojo.DTO.request.ProducerPostRequest;
 import academy.devdojo.DTO.request.ProducerPutRequest;
 import academy.devdojo.DTO.response.ProducerGetResponse;
+import academy.devdojo.DTO.response.ProducerPostResponse;
+import academy.devdojo.DTO.response.ProducerPutResponse;
 import academy.devdojo.domain.Producer;
 import academy.devdojo.mapper.ProducerMapper;
 import academy.devdojo.service.ProducerService;
@@ -20,7 +22,8 @@ import java.util.List;
 @Slf4j
 public class ProducerController {
     private static final ProducerMapper MAPPER = ProducerMapper.INSTANCE;
-    private ProducerService producerService;
+    private final ProducerService producerService;
+
     public ProducerController(){
         this.producerService = new ProducerService();
     }
@@ -44,12 +47,13 @@ public class ProducerController {
 
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE,
             headers = "x-api-key")
-    public ResponseEntity<ProducerGetResponse> saveAnime(@RequestBody ProducerPostRequest producerPostRequest, @RequestHeader HttpHeaders headers) {
+    public ResponseEntity<ProducerPostResponse> save(@RequestBody ProducerPostRequest producerPostRequest, @RequestHeader HttpHeaders headers) {
 
         Producer producer = MAPPER.toProducer(producerPostRequest);
-        ProducerGetResponse response = MAPPER.toProducerGetResponse(producer);
 
         producerService.save(producer);
+
+        ProducerPostResponse response = MAPPER.toProducerPostResponse(producer);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
@@ -63,12 +67,13 @@ public class ProducerController {
     }
 
     @PutMapping
-    public ResponseEntity<ProducerPutRequest> update(@RequestBody ProducerPutRequest request) {
+    public ResponseEntity<ProducerPutResponse> update(@RequestBody ProducerPutRequest request) {
         log.info("Trying update producer by id: {}", request.getId());
 
         Producer producer = MAPPER.toProducer(request);
         producerService.update(producer);
+        ProducerPutResponse response = MAPPER.toProducerPutResponse(producer);
 
-        return ResponseEntity.ok(request);
+        return ResponseEntity.ok(response);
     }
 }

@@ -4,6 +4,7 @@ import academy.devdojo.DTO.request.AnimePutRequest;
 import academy.devdojo.DTO.request.AnimePostRequest;
 import academy.devdojo.DTO.response.AnimeGetResponse;
 import academy.devdojo.DTO.response.AnimePostResponse;
+import academy.devdojo.DTO.response.AnimePutResponse;
 import academy.devdojo.domain.Anime;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -22,6 +23,7 @@ public interface AnimeMapper {
     AnimePostResponse toPostAnimeResponse(Anime anime);
 
     AnimeGetResponse toAnimeResponse(Anime anime);
+    AnimePutResponse toAnimePutResponse(Anime anime);
 
     List<AnimeGetResponse> toAnimeResponseList(List<Anime> animes);
 

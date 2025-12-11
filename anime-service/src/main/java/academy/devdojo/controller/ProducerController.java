@@ -23,7 +23,7 @@ import java.util.List;
 @Slf4j
 @RequiredArgsConstructor
 public class ProducerController {
-    private final ProducerMapper MAPPER = ProducerMapper.INSTANCE;
+    private final ProducerMapper MAPPER;
     private final ProducerService producerService;
 
     @GetMapping()

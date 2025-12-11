@@ -8,6 +8,7 @@ import academy.devdojo.DTO.response.AnimePutResponse;
 import academy.devdojo.domain.Anime;
 import academy.devdojo.mapper.AnimeMapper;
 import academy.devdojo.service.AnimeService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,13 +19,10 @@ import java.util.List;
 @RestController
 @RequestMapping("v1/animes")
 @Slf4j
+@RequiredArgsConstructor
 public class AnimeController {
     private static final AnimeMapper MAPPER = AnimeMapper.INSTANCE;
     private final AnimeService service;
-
-    public AnimeController() {
-        this.service = new AnimeService();
-    }
 
     @GetMapping()
     public ResponseEntity<List<AnimeGetResponse>> listAllAnimes(@RequestParam(required = false) String animeName) {

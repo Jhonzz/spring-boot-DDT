@@ -20,8 +20,8 @@ import java.util.List;
 
 @RestController
 @RequestMapping("v1/producers")
-@Slf4j
 @RequiredArgsConstructor
+@Slf4j
 public class ProducerController {
     private final ProducerMapper MAPPER;
     private final ProducerService producerService;

@@ -7,7 +7,8 @@ spring:
 
 logging:
   level:
-    academy-devdojo: debug
+    academy.devdojo: debug
+
 server:
   servlet:
     context-path: /

@@ -1,7 +1,12 @@
 package academy.devdojo.repository;
 
+import academy.devdojo.config.ConnectionConfiguration;
 import academy.devdojo.domain.Producer;
+import externalDependency.Connection;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
@@ -9,10 +14,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+
 @Repository
+@RequiredArgsConstructor
+@Log4j2
 public class ProducerHardCodedRepository {
     @Getter
     private static final List<Producer> PRODUCERS = new ArrayList<>();
+
+    @Qualifier(value = "connectionMySql") //Will search for a bean or function with this name
+    private final Connection connection;
 
     static {
         var mappa = Producer.builder().id(1L).name("Mappa").createdAt(LocalDateTime.now()).build();
@@ -30,6 +41,7 @@ public class ProducerHardCodedRepository {
     }
 
     public List<Producer> findByName(String name){
+        log.debug(connection);
         return PRODUCERS.stream().filter(producer -> name.equalsIgnoreCase(producer.getName())).toList();
     }
 

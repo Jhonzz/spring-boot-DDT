@@ -72,9 +72,36 @@ class ProducerHardCodedRepositoryTest {
 
         Assertions.assertThat(producers).contains(expectedProducer);
     }
+    @Test
+    @DisplayName("save creates a producer")
+    @Order(5)
+    void save_CreatesProducer_WhenSucessful(){
+        BDDMockito.when(producerData.getProducers()).thenReturn(producerList);
 
+        var producerTosave = Producer.builder().id(99L).name("MAPPA").createdAt(LocalDateTime.now()).build();
+        var producer = repository.save(producerTosave);
 
+        Assertions.assertThat(producer).isEqualTo(producerTosave).hasNoNullFieldsOrProperties();
+        Optional<Producer> producerSavedOptional = repository.findById(producerTosave.getId());
 
+        Assertions.assertThat(producerSavedOptional).isPresent().contains(producerTosave);
+    }
+    @Test
+    @DisplayName("update updates a producer")
+    @Order(7)
+    void update_UpdateProducer_WhenSucessful(){
+        BDDMockito.when(producerData.getProducers()).thenReturn(producerList);
+        var producerToUpdate = producerList.getFirst();
+        producerToUpdate.setName("Madhouse");
+        repository.update(producerToUpdate);
+
+        Assertions.assertThat(producerList).contains(producerToUpdate);
+
+        var producerUpdatedOptional = repository.findById(producerToUpdate.getId());
+
+        Assertions.assertThat(producerUpdatedOptional).isPresent();
+        Assertions.assertThat(producerUpdatedOptional.get().getName()).isEqualTo(producerToUpdate.getName());
+    }
 
 
 }

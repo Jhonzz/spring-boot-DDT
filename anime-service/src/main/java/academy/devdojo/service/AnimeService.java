@@ -14,16 +14,16 @@ import java.util.List;
 public class AnimeService {
     private final AnimeHardCodedRepository repository;
 
-    public Anime save(Anime anime) {
-        return repository.save(anime);
-    }
-
     public List<Anime> findAll(String name) {
         return name == null ? repository.findAll() : repository.findByName(name);
     }
 
     public Anime findByIdOrThrowNotFoundException(Long id) {
         return repository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Anime not found"));
+    }
+
+    public Anime save(Anime anime) {
+        return repository.save(anime);
     }
 
     public void delete(Long id) {
@@ -38,5 +38,4 @@ public class AnimeService {
     public void assertAnimeExists(Long id){
         findByIdOrThrowNotFoundException(id);
     }
-
 }

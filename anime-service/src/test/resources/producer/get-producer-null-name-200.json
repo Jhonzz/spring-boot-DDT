@@ -1,0 +1,22 @@
+[
+  {
+    "name": "Ufotable",
+    "id": 1,
+    "createdAt": "2026-01-20T20:09:29.4158618"
+  },
+  {
+    "name": "MadHouse",
+    "id": 2,
+    "createdAt": "2026-01-20T20:09:29.4158618"
+  },
+  {
+    "name": "Saru",
+    "id": 3,
+    "createdAt": "2026-01-20T20:09:29.4158618"
+  },
+  {
+    "name": "StudioGhibli",
+    "id": 4,
+    "createdAt": "2026-01-20T20:09:29.4158618"
+  }
+]

@@ -27,7 +27,7 @@ public class ProducerController {
     private final ProducerService producerService;
 
     @GetMapping()
-    public ResponseEntity<List<ProducerGetResponse>> listAll(@RequestParam(required = false) String producerName) {
+    public ResponseEntity<List<ProducerGetResponse>> findAll(@RequestParam(required = false) String producerName) {
 
         var producerList = producerService.findAll(producerName);
         var response = MAPPER.toProducerGetResponseList(producerList);

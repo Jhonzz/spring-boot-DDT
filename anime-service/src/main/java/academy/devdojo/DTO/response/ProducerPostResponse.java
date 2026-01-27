@@ -8,5 +8,4 @@ import java.time.LocalDateTime;
 public class ProducerPostResponse {
     private Long id;
     private String name;
-    private LocalDateTime createdAt;
 }

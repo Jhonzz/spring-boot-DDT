@@ -6,7 +6,6 @@ import academy.devdojo.repository.ProducerHardCodedRepository;
 import org.junit.jupiter.api.*;
 import org.mockito.ArgumentMatchers;
 import org.mockito.BDDMockito;
-import org.mockito.Spy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.context.annotation.ComponentScan;
@@ -21,7 +20,6 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.io.IOException;
 import java.nio.file.Files;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -143,6 +141,67 @@ class ProducerControllerTest {
                 .andExpect(MockMvcResultMatchers.content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON)) //its not necessary, but force the test use this type
                 .andExpect(MockMvcResultMatchers.status().isCreated())
                 .andExpect(MockMvcResultMatchers.content().json(response));
+    }
+
+    @Test
+    @DisplayName("PUT v1/producers updates a producer")
+    @Order(7)
+    void update_UpdatesProducer_WhenSucessful() throws Exception {
+        var request = readResourceFile("producer/put-request-producer-200.json");
+        var response = readResourceFile("producer/put-response-producer-200.json");
+
+        BDDMockito.when(producerData.getProducers()).thenReturn(producerList);
+        mockMvc.perform(MockMvcRequestBuilders
+                        .put("/v1/producers")
+                        .content(request)
+                        .contentType(MediaType.APPLICATION_JSON)
+                )
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(MockMvcResultMatchers.content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON)) //its not necessary, but force the test use this type
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().json(response));
+    }
+
+    @Test
+    @DisplayName("PUT v1/producers throws ResponseStatusException when producer is not found")
+    @Order(8)
+    void update_ThrowsNotFound_WhenProducerIsNotFound() throws Exception {
+        BDDMockito.when(producerData.getProducers()).thenReturn(producerList);
+
+        var request = readResourceFile("producer/put-request-producer-404.json");
+        mockMvc.perform(MockMvcRequestBuilders
+                        .put("/v1/producers")
+                        .content(request)
+                        .contentType(MediaType.APPLICATION_JSON)
+                )
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(MockMvcResultMatchers.status().isNotFound())
+                .andExpect(MockMvcResultMatchers.status().reason("Producer not found"));
+    }
+
+    @Test
+    @DisplayName("DELETE v1/producers/1 removes a producer")
+    @Order(9)
+    void delete_RemovesAProducer_WhenSucessful() throws Exception {
+        BDDMockito.when(producerData.getProducers()).thenReturn(producerList);
+        Long id = producerList.getFirst().getId();
+
+        mockMvc.perform(MockMvcRequestBuilders.delete("/v1/producers/{id}", id))
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(MockMvcResultMatchers.status().isNoContent());
+    }
+
+    @Test
+    @DisplayName("DELETE v1/producers/99 throws ResponseStatusException when producer is not found")
+    @Order(10)
+    void delete_ThrowsResponseStatusException_WhenProducerIsNotFound() throws Exception {
+        BDDMockito.when(producerData.getProducers()).thenReturn(producerList);
+        Long id = 99L;
+
+        mockMvc.perform(MockMvcRequestBuilders.delete("/v1/producers/{id}", id))
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(MockMvcResultMatchers.status().isNotFound())
+                .andExpect(MockMvcResultMatchers.status().reason("Producer not found"));
     }
 
     private String readResourceFile(String fileName) throws IOException {

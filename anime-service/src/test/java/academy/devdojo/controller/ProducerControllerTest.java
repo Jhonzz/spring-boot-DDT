@@ -36,7 +36,7 @@ class ProducerControllerTest {
     @MockitoBean
     private ProducerData producerData;
     @MockitoSpyBean
-    private ProducerHardCodedRepository repository;
+    private ProducerHardCodedRepository repository; //using in post
     private List<Producer> producerList;
     @Autowired
     private ResourceLoader resourceLoader;

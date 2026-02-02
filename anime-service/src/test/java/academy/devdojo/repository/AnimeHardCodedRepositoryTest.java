@@ -1,8 +1,8 @@
 package academy.devdojo.repository;
 
+import academy.devdojo.commons.AnimeUtils;
 import academy.devdojo.domain.Anime;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -10,8 +10,8 @@ import org.mockito.BDDMockito;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @ExtendWith(MockitoExtension.class)
@@ -25,15 +25,12 @@ class AnimeHardCodedRepositoryTest {
     private AnimeData animeData;
     @Getter
     private List<Anime> animeList;
-
+    @InjectMocks
+    private AnimeUtils animeUtils;
 
     @BeforeEach
     void init() {
-        var berserk = Anime.builder().id(1L).name("Berserk").build();
-        var dandadan = Anime.builder().id(2L).name("Dandadan").build();
-        var dragonBall = Anime.builder().id(3L).name("Dragon ball").build();
-        var naruto = Anime.builder().id(4L).name("Naruto").build();
-        animeList = new ArrayList<>(List.of(berserk, dandadan, dragonBall, naruto));
+        animeList = animeUtils.newAnimeList();
     }
 
     @Test
@@ -84,7 +81,7 @@ class AnimeHardCodedRepositoryTest {
     @Test
     @DisplayName("findByName returns a list with given name")
     @Order(4)
-    void findByName_returnsListWithAnimes_WhenSucessfull(){
+    void findByName_returnsListWithAnimes_WhenSucessfull() {
         BDDMockito.when(animeData.getAnimes()).thenReturn(animeList);
 
         var animeName = animeList.getFirst().getName();
@@ -109,7 +106,7 @@ class AnimeHardCodedRepositoryTest {
     @Test
     @DisplayName("update updates an anime")
     @Order(5)
-    void updateAnime_updatesAnime_WhenSucessful(){
+    void updateAnime_updatesAnime_WhenSucessful() {
         BDDMockito.when(animeData.getAnimes()).thenReturn(animeList);
 
         var animeToUpdate = animeList.getFirst();

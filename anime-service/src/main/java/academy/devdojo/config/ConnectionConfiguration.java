@@ -18,7 +18,7 @@ public class ConnectionConfiguration {
     @Bean
     @Profile("mysql")
     public Connection connectionMySql(){
-        return new Connection("localhost", "devdojoMySql","vegeta");
+        return new Connection(url, username,password);
     }
 
     @Bean(value = "connectionMongoDB")

@@ -1,4 +1,6 @@
 spring:
+#  profiles:
+#    active: mongo, mysql
   application:
     name: anime-service
   threads:

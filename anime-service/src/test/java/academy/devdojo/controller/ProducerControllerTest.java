@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.context.bean.override.mockito.MockitoSpyBean;
 import org.springframework.test.web.servlet.MockMvc;
@@ -24,8 +25,9 @@ import java.util.List;
 @WebMvcTest(controllers = ProducerController.class)
 //Não carrega as classes @Component, então voce precisa adiciona-las no @import
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-@ComponentScan(basePackages = "academy.devdojo") // will scan all the beans in the package
+@ComponentScan(basePackages = {"academy.devdojo"}) // will scan all the beans in the package
 //@Import({ProducerMapperImpl.class, ProducerService.class, ProducerService.class, ProducerHardCodedRepository.class, ProducerData.class}) can be used in a application with excessive beans, so the process would cost less
+//@ActiveProfiles("test") //inputed by pom.xml with surefire (best way to do this to not forget)
 class ProducerControllerTest {
     private static final String URL = "/v1/producers";
     @Autowired

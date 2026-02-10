@@ -1,6 +1,6 @@
 spring:
-#  profiles:
-#    active: mongo, mysql
+  #  profiles:
+  #    active: mongo, mysql
   application:
     name: anime-service
   threads:
@@ -19,3 +19,7 @@ server:
   tomcat:
     threads:
       max: 20
+database:
+  url: ${DB_URL:localhost}:${DB_PORT:3306}
+  username: ${LOCAL_USERNAME:JHON} #if the enviroment variable doesnt exist will set JHON as value
+  password: ${LOCAL_PASSWORD:devdojo}

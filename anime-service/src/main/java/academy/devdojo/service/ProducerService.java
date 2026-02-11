@@ -14,7 +14,7 @@ import java.util.List;
 public class ProducerService {
     private final ProducerHardCodedRepository repository;
 
-    public List<Producer> findAll(String name){
+    public List<Producer> findAll(String name) {
         return name == null ? repository.findAll() : repository.findByName(name);
     }
 
@@ -22,14 +22,16 @@ public class ProducerService {
         return repository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Producer not found"));
     }
 
-    public Producer save(Producer producer){
+    public Producer save(Producer producer) {
         return repository.save(producer);
     }
-    public void delete(Long id){
+
+    public void delete(Long id) {
         var producer = findByIdOrThrowNotFound(id);
         repository.delete(producer);
     }
-    public Producer update(Producer producerToUpdate){
+
+    public Producer update(Producer producerToUpdate) {
         var producer = findByIdOrThrowNotFound(producerToUpdate.getId());
         producerToUpdate.setCreatedAt(producer.getCreatedAt());
         return repository.update(producer);

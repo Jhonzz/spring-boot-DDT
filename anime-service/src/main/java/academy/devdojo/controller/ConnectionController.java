@@ -14,9 +14,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class ConnectionController {
     private final Connection connection;
-    
+
     @GetMapping
-    public ResponseEntity<Connection> getConnections(){
+    public ResponseEntity<Connection> getConnections() {
         return ResponseEntity.ok(connection);
     }
 }

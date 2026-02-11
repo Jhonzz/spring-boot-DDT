@@ -30,12 +30,13 @@ public class AnimeService {
         var animeFound = findByIdOrThrowNotFoundException(id);
         repository.delete(animeFound);
     }
-    public void update(Anime animeToUpdate){
+
+    public void update(Anime animeToUpdate) {
         assertAnimeExists(animeToUpdate.getId());
         repository.update(animeToUpdate);
     }
 
-    public void assertAnimeExists(Long id){
+    public void assertAnimeExists(Long id) {
         findByIdOrThrowNotFoundException(id);
     }
 }

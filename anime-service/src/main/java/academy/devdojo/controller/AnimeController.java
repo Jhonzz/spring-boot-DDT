@@ -56,7 +56,7 @@ public class AnimeController {
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity<Void> deleteAnime(@PathVariable Long id){
+    public ResponseEntity<Void> deleteAnime(@PathVariable Long id) {
         log.info("Deleting anime by id: {}", id);
 
         service.delete(id);
@@ -65,7 +65,7 @@ public class AnimeController {
     }
 
     @PutMapping
-    public ResponseEntity<AnimePutResponse> update(@RequestBody AnimePutRequest request){
+    public ResponseEntity<AnimePutResponse> update(@RequestBody AnimePutRequest request) {
         var animeToUpdate = mapper.toAnime(request);
         service.update(animeToUpdate);
         AnimePutResponse response = mapper.toAnimePutResponse(animeToUpdate);

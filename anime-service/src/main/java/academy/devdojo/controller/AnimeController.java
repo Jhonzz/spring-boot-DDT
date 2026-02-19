@@ -68,7 +68,7 @@ public class AnimeController {
     public ResponseEntity<AnimePutResponse> update(@RequestBody AnimePutRequest request) {
         var animeToUpdate = mapper.toAnime(request);
         service.update(animeToUpdate);
-        AnimePutResponse response = mapper.toAnimePutResponse(animeToUpdate);
+        var response = mapper.toAnimePutResponse(animeToUpdate);
         return ResponseEntity.ok(response);
     }
 }

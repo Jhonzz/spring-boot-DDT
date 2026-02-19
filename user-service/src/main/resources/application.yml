@@ -1,0 +1,22 @@
+spring:
+  #  profiles:
+  #    active: mongo, mysql
+  application:
+    name: user-service
+  threads:
+    virtual:
+      enabled: true
+
+logging:
+  level:
+    academy.devdojo: debug
+server:
+  port: 8090
+
+  servlet:
+    context-path: /
+  error:
+    include-stacktrace: on_param #?trace=true
+  tomcat:
+    threads:
+      max: 20

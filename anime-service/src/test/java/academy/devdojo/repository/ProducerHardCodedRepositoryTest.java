@@ -89,7 +89,7 @@ class ProducerHardCodedRepositoryTest {
     }
     @Test
     @DisplayName("update updates a producer")
-    @Order(7)
+    @Order(6)
     void update_UpdateProducer_WhenSucessful(){
         BDDMockito.when(producerData.getProducers()).thenReturn(producerList);
         var producerToUpdate = producerList.getFirst();
@@ -103,6 +103,21 @@ class ProducerHardCodedRepositoryTest {
         Assertions.assertThat(producerUpdatedOptional).isPresent();
         Assertions.assertThat(producerUpdatedOptional.get().getName()).isEqualTo(producerToUpdate.getName());
     }
+
+    @Test
+    @DisplayName("delete removes a producer")
+    @Order(7)
+    void delete_RemoveProducer_WhenSuccessful(){
+        BDDMockito.when(producerData.getProducers()).thenReturn(producerList);
+
+        var producerToDelete = producerList.getFirst();
+        repository.delete(producerToDelete);
+
+        var producers = repository.findAll();
+
+        Assertions.assertThat(producers).isNotEmpty().doesNotContain(producerToDelete);
+    }
+
 
 
 }

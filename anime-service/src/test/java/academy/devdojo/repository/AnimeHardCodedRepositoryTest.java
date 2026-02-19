@@ -36,7 +36,7 @@ class AnimeHardCodedRepositoryTest {
     @Test
     @DisplayName("findAll returns all animes when sucessful")
     @Order(1)
-    void findAll_returnsAllAnimes_WhenSucessful() {
+    void findAll_returnsAllAnimes_WhenSuccessful() {
         BDDMockito.when(animeData.getAnimes()).thenReturn(animeList);
 
         var animes = repository.findAll();
@@ -46,7 +46,7 @@ class AnimeHardCodedRepositoryTest {
     @Test
     @DisplayName("findById returns anime with given id")
     @Order(2)
-    void findByName_returnsA_WhenSucessful() {
+    void findByName_returnsAnime_WhenSuccessful() {
         BDDMockito.when(animeData.getAnimes()).thenReturn(animeList);
 
         var expectedAnime = animeList.getFirst();
@@ -57,8 +57,8 @@ class AnimeHardCodedRepositoryTest {
 
     @Test
     @DisplayName("findById returns anime with given id")
-    @Order(2)
-    void findById_returnsAnimeById_WhenSucessful() {
+    @Order(3)
+    void findById_returnsAnimeById_WhenSuccessful() {
         BDDMockito.when(animeData.getAnimes()).thenReturn(animeList);
 
         var expectedAnime = animeList.getFirst();
@@ -69,7 +69,7 @@ class AnimeHardCodedRepositoryTest {
 
     @Test
     @DisplayName("findByName returns empty list when name is null")
-    @Order(3)
+    @Order(4)
     void findByName_returnsEmptyList_WhenNameIsNull() {
         BDDMockito.when(animeData.getAnimes()).thenReturn(animeList);
 
@@ -80,8 +80,8 @@ class AnimeHardCodedRepositoryTest {
 
     @Test
     @DisplayName("findByName returns a list with given name")
-    @Order(4)
-    void findByName_returnsListWithAnimes_WhenSucessfull() {
+    @Order(5)
+    void findByName_returnsListWithAnimes_WhenSuccessfull() {
         BDDMockito.when(animeData.getAnimes()).thenReturn(animeList);
 
         var animeName = animeList.getFirst().getName();
@@ -92,8 +92,8 @@ class AnimeHardCodedRepositoryTest {
 
     @Test
     @DisplayName("saveAnime returns a list with given name")
-    @Order(5)
-    void saveAnime_createsAnime_WhenSucessful() {
+    @Order(6)
+    void save_createsAnime_WhenSuccessful() {
         BDDMockito.when(animeData.getAnimes()).thenReturn(animeList);
 
         var anime = Anime.builder().id(5L).name("MAPPA").build();
@@ -105,8 +105,8 @@ class AnimeHardCodedRepositoryTest {
 
     @Test
     @DisplayName("update updates an anime")
-    @Order(5)
-    void updateAnime_updatesAnime_WhenSucessful() {
+    @Order(7)
+    void updateAnime_updatesAnime_WhenSuccessful() {
         BDDMockito.when(animeData.getAnimes()).thenReturn(animeList);
 
         var animeToUpdate = animeList.getFirst();
@@ -118,7 +118,21 @@ class AnimeHardCodedRepositoryTest {
         var animeFound = repository.findById(animeToUpdate.getId());
 
         Assertions.assertThat(animeFound).isPresent();
-        Assertions.assertThat(animeFound.get().getName()).isEqualTo(animeFound.get().getName());
+        Assertions.assertThat(animeFound.get().getName()).isEqualTo(animeToUpdate.getName());
+    }
+
+    @Test
+    @DisplayName("delete removes an anime")
+    @Order(8)
+    void delete_RemovesAnime_WhenSuccessful(){
+        BDDMockito.when(animeData.getAnimes()).thenReturn(animeList);
+
+        var animeToDelete = animeList.getFirst();
+        repository.delete(animeToDelete);
+
+        var animes = repository.findAll();
+
+        Assertions.assertThat(animes).isNotEmpty().doesNotContain(animeToDelete);
     }
 
 

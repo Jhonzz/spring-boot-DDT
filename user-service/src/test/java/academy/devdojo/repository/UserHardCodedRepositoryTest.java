@@ -77,7 +77,7 @@ class UserHardCodedRepositoryTest {
     @Test
     @DisplayName("save creates an user")
     @Order(5)
-    void save_CreatesUser_WhenSucessful(){
+    void save_CreatesUser_WhenSuccessful(){
         BDDMockito.when(userData.getUsers()).thenReturn(userList);
 
         var userToSave = userUtils.userToSave();

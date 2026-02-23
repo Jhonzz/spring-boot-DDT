@@ -8,6 +8,7 @@ import academy.devdojo.DTO.response.UserPutResponse;
 import academy.devdojo.domain.User;
 import academy.devdojo.mapper.UserMapper;
 import academy.devdojo.service.UserService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.coyote.Response;
@@ -46,7 +47,7 @@ public class UserController {
     }
 
     @PostMapping
-    private ResponseEntity<UserPostResponse> save(@RequestBody UserPostRequest request) {
+    private ResponseEntity<UserPostResponse> save(@RequestBody @Valid UserPostRequest request) {
         log.debug("Request to save user: {}", request);
         var userToSave = mapper.toUser(request);
 
@@ -58,7 +59,7 @@ public class UserController {
     }
 
     @PutMapping
-    private ResponseEntity<UserPutResponse> update(@RequestBody UserPutRequest request) {
+    private ResponseEntity<UserPutResponse> update(@RequestBody @Valid UserPutRequest request) {
         var userToUpdate = mapper.toUser(request);
 
         service.update(userToUpdate);

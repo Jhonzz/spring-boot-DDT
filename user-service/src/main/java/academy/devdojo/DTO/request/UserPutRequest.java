@@ -6,7 +6,7 @@ import lombok.Data;
 @Data
 public class UserPutRequest {
 
-    @NotNull(message = "The field 'id' cannot be null")
+    @NotNull(message = "The field 'id' is required to update user")
     private Long id;
     @NotBlank(message = "The field 'firstName' is required")//pelo menos um caractere que nao seja null, nao pode ser null nem vazio
     private String firstName;

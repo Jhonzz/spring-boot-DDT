@@ -8,6 +8,7 @@ import academy.devdojo.DTO.response.ProducerPutResponse;
 import academy.devdojo.domain.Producer;
 import academy.devdojo.mapper.ProducerMapper;
 import academy.devdojo.service.ProducerService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
@@ -45,7 +46,7 @@ public class ProducerController {
 
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE,
             headers = "x-api-key")
-    public ResponseEntity<ProducerPostResponse> save(@RequestBody ProducerPostRequest producerPostRequest, @RequestHeader HttpHeaders headers) {
+    public ResponseEntity<ProducerPostResponse> save(@RequestBody @Valid ProducerPostRequest producerPostRequest, @RequestHeader HttpHeaders headers) {
 
         Producer producer = MAPPER.toProducer(producerPostRequest);
 
@@ -65,7 +66,7 @@ public class ProducerController {
     }
 
     @PutMapping
-    public ResponseEntity<ProducerPutResponse> update(@RequestBody ProducerPutRequest request) {
+    public ResponseEntity<ProducerPutResponse> update(@RequestBody @Valid ProducerPutRequest request) {
         log.info("Trying update producer by id: {}", request.getId());
 
         Producer producer = MAPPER.toProducer(request);

@@ -12,6 +12,7 @@ logging:
     academy.devdojo: debug
 
 server:
+  port: 8080
   servlet:
     context-path: /
   error:

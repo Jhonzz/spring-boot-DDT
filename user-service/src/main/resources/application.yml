@@ -1,8 +1,16 @@
 spring:
+  config:
+    import: optional:classpath:.env[.properties]
   #  profiles:
   #    active: mongo, mysql
   application:
     name: user-service
+  datasource:
+    url: jdbc:mysql://localhost:3306/user_service?useTimezone=true&serverTimezone=UTC&createDatabaseIfNotExist=true
+    username: ${ENV_ROOT_USER:root}  # Case ENV_ROOT_USER is not found apply root
+    password: ${ENV_ROOT_PASSWORD:devdojo}
+  jpa:
+    show-sql: true
   threads:
     virtual:
       enabled: true

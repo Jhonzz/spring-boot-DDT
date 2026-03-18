@@ -1,7 +1,6 @@
 package academy.devdojo.repository;
 
 import academy.devdojo.domain.User;
-import academy.devdojo.service.UserData;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 

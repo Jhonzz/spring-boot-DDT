@@ -11,6 +11,8 @@ spring:
     password: ${ENV_ROOT_PASSWORD:devdojo}
   jpa:
     show-sql: true
+    hibernate:
+      ddl-auto: update
   threads:
     virtual:
       enabled: true

@@ -1,4 +1,4 @@
-package academy.devdojo.service;
+package academy.devdojo.repository;
 
 import academy.devdojo.domain.User;
 import lombok.Getter;

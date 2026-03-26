@@ -1,8 +1,18 @@
 spring:
-  #  profiles:
-  #    active: mongo, mysql
+  config:
+    import: optional:classpath:.env[.properties]
+    profiles:
+      active: mongo, mysql
   application:
     name: anime-service
+  datasource:
+    url: jdbc:mysql://localhost:3306/anime_service?useTimezone=true&serverTimezone=UTC&createDatabaseIfNotExist=true
+    username: ${ENV_ROOT_USER:root}  # Case ENV_ROOT_USER is not found apply root
+    password: ${ENV_ROOT_PASSWORD:devdojo}
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
   threads:
     virtual:
       enabled: true
@@ -10,9 +20,9 @@ spring:
 logging:
   level:
     academy.devdojo: debug
-
 server:
-  port: 8080
+  port: 8090
+
   servlet:
     context-path: /
   error:
@@ -20,8 +30,3 @@ server:
   tomcat:
     threads:
       max: 20
-
-database:
-  url: ${DB_URL:localhost}:${DB_PORT:3306}
-  username: ${LOCAL_USERNAME:JHON} #if the enviroment variable doesnt exist will set JHON as value
-  password: ${LOCAL_PASSWORD:devdojo}

@@ -7,7 +7,6 @@ import academy.devdojo.DTO.response.UserPostResponse;
 import academy.devdojo.DTO.response.UserPutResponse;
 import academy.devdojo.domain.User;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 import org.mapstruct.MappingConstants;
 
 import java.util.List;

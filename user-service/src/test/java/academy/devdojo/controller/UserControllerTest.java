@@ -177,7 +177,7 @@ class UserControllerTest {
         var request = fileUtils.readResourceFile("user/put-request-user-200.json");
         var response = fileUtils.readResourceFile("user/put-response-user-200..json");
         var id = 1L;
-        var expectedUser = userList.stream().filter(user -> user.getId().equals(1L)).findFirst();
+        var expectedUser = userList.stream().filter(user -> user.getId().equals(id)).findFirst();
 
         BDDMockito.when(repository.findById(id)).thenReturn(expectedUser);
 

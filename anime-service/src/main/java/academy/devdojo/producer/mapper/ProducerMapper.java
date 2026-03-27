@@ -1,8 +1,12 @@
-package academy.devdojo.producer;
+package academy.devdojo.producer.mapper;
 
 import academy.devdojo.domain.Producer;
+import academy.devdojo.producer.DTO.request.ProducerPostRequest;
+import academy.devdojo.producer.DTO.request.ProducerPutRequest;
+import academy.devdojo.producer.DTO.response.ProducerGetResponse;
+import academy.devdojo.producer.DTO.response.ProducerPostResponse;
+import academy.devdojo.producer.DTO.response.ProducerPutResponse;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 import org.mapstruct.MappingConstants;
 import org.mapstruct.factory.Mappers;
 
@@ -12,8 +16,6 @@ import java.util.List;
 public interface ProducerMapper {
     ProducerMapper INSTANCE = Mappers.getMapper(ProducerMapper.class);
 
-    @Mapping(target = "createdAt", expression = "java(java.time.LocalDateTime.now())")
-    @Mapping(target = "id", expression = "java(java.util.concurrent.ThreadLocalRandom.current().nextLong(100_000))")
     Producer toProducer(ProducerPostRequest postRequest);
 
     Producer toProducer(ProducerPutRequest producerPutRequest);

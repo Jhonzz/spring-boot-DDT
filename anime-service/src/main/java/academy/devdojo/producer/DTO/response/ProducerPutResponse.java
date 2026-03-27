@@ -1,12 +1,9 @@
-package academy.devdojo.producer;
+package academy.devdojo.producer.DTO.response;
 
 import lombok.Data;
-
-import java.time.LocalDateTime;
 
 @Data
 public class ProducerPutResponse {
     private Long id;
     private String name;
-    private LocalDateTime createdAt;
 }

@@ -1,13 +1,13 @@
 package academy.devdojo.anime.controller;
 
+import academy.devdojo.anime.mapper.AnimeMapper;
 import academy.devdojo.anime.request.AnimePostRequest;
 import academy.devdojo.anime.request.AnimePutRequest;
 import academy.devdojo.anime.response.AnimeGetResponse;
 import academy.devdojo.anime.response.AnimePostResponse;
 import academy.devdojo.anime.response.AnimePutResponse;
-import academy.devdojo.domain.Anime;
-import academy.devdojo.anime.mapper.AnimeMapper;
 import academy.devdojo.anime.service.AnimeService;
+import academy.devdojo.domain.Anime;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

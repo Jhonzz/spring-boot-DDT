@@ -1,6 +1,7 @@
-package academy.devdojo.producer;
+package academy.devdojo.producer.repository;
 
 import academy.devdojo.domain.Producer;
+import academy.devdojo.producer.ProducerData;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Repository;

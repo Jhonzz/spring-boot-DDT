@@ -1,4 +1,4 @@
-package academy.devdojo.producer;
+package academy.devdojo.producer.DTO.response;
 
 import lombok.Builder;
 import lombok.Data;

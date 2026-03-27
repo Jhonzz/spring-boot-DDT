@@ -2,6 +2,7 @@ package academy.devdojo.producer;
 
 import academy.devdojo.commons.ProducerUtils;
 import academy.devdojo.domain.Producer;
+import academy.devdojo.producer.repository.ProducerHardCodedRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -33,7 +34,7 @@ class ProducerHardCodedRepositoryTest {
     @Test
     @DisplayName("findAll returns a list with all producers")
     @Order(1)
-    void findAll_returnsAllProducers_WhenSuccessfull(){
+    void findAll_returnsAllProducers_WhenSuccessful(){
         BDDMockito.when(producerData.getProducers()).thenReturn(producerList);
         var producers = repository.findAll();
         Assertions.assertThat(producers).isNotNull().hasSameElementsAs(producerList);
@@ -41,7 +42,7 @@ class ProducerHardCodedRepositoryTest {
     @Test
     @DisplayName("findById returns a producer with given id")
     @Order(2)
-    void findById_returnsProducerById_WhenSuccessfull(){
+    void findById_returnsProducerById_WhenSuccessful(){
         BDDMockito.when(producerData.getProducers()).thenReturn(producerList);
 
         var expectedProducer = producerList.getFirst();

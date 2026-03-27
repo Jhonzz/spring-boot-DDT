@@ -1,4 +1,4 @@
-package academy.devdojo.producer;
+package academy.devdojo.producer.DTO.request;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

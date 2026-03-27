@@ -1,7 +1,8 @@
-package academy.devdojo.producer;
+package academy.devdojo.producer.service;
 
 import academy.devdojo.domain.Producer;
 import academy.devdojo.exception.NotFoundException;
+import academy.devdojo.producer.repository.ProducerRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -10,7 +11,7 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class ProducerService {
-    private final ProducerHardCodedRepository repository;
+    private final ProducerRepository repository;
 
     public List<Producer> findAll(String name) {
         return name == null ? repository.findAll() : repository.findByName(name);
@@ -30,8 +31,12 @@ public class ProducerService {
     }
 
     public Producer update(Producer producerToUpdate) {
-        var producer = findByIdOrThrowNotFound(producerToUpdate.getId());
-        producerToUpdate.setCreatedAt(producer.getCreatedAt());
-        return repository.update(producer);
+        assertProducerExists(producerToUpdate.getId());
+        producerToUpdate.setCreatedAt(producerToUpdate.getCreatedAt());
+        return repository.save(producerToUpdate);
+    }
+
+    public void assertProducerExists(Long id){
+        findByIdOrThrowNotFound(id);
     }
 }

@@ -8,6 +8,7 @@ import org.hibernate.annotations.SourceType;
 
 import java.time.LocalDateTime;
 
+@With
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor

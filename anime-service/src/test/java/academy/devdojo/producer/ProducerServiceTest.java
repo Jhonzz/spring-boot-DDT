@@ -2,7 +2,7 @@ package academy.devdojo.producer;
 
 import academy.devdojo.commons.ProducerUtils;
 import academy.devdojo.domain.Producer;
-import academy.devdojo.producer.repository.ProducerHardCodedRepository;
+import academy.devdojo.producer.repository.ProducerRepository;
 import academy.devdojo.producer.service.ProducerService;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.*;
@@ -24,7 +24,7 @@ class ProducerServiceTest {
     @InjectMocks
     private ProducerService service;
     @Mock
-    private ProducerHardCodedRepository repository;
+    private ProducerRepository repository;
     private List<Producer> producerList;
     @InjectMocks
     private ProducerUtils producerUtils;
@@ -35,7 +35,7 @@ class ProducerServiceTest {
     }
 
     @Test
-    @DisplayName("FindAll returns a list of producers when parameter is null")
+    @DisplayName("findAll returns a list of producers when parameter is null")
     @Order(1)
     void findAll_ReturnsAll_WhenParameterIsNull() {
         BDDMockito.when(repository.findAll()).thenReturn(producerList);
@@ -45,7 +45,7 @@ class ProducerServiceTest {
     }
 
     @Test
-    @DisplayName("FindAll returns all producers when null")
+    @DisplayName("findByName returns a list with the users found with the given name")
     @Order(2)
     void findByName_ReturnsProducer_WhenParameterIsNotNull() {
         var producer = producerList.getFirst();
@@ -70,7 +70,7 @@ class ProducerServiceTest {
     @Test
     @DisplayName("findById returns a producer when given id")
     @Order(4)
-    void findById_ReturnsProducer_WhenSucessful(){
+    void findById_ReturnsProducer_WhenSuccessful(){
         var expectedProducer = producerList.getFirst();
         BDDMockito.when(repository.findById(expectedProducer.getId())).thenReturn(Optional.of(expectedProducer));
 
@@ -92,7 +92,7 @@ class ProducerServiceTest {
     @Test
     @DisplayName("save creates a producer")
     @Order(6)
-    void save_CreatesAProducer_WhenSucessful(){
+    void save_CreatesAProducer_WhenSuccessful(){
         var producerToSave = producerUtils.newProducerToSave();
         BDDMockito.when(repository.save(producerToSave)).thenReturn(producerToSave);
 
@@ -103,7 +103,7 @@ class ProducerServiceTest {
     @Test
     @DisplayName("delete removes a producer")
     @Order(7)
-    void delete_RemovesAProducer_WhenSucessful(){
+    void delete_RemovesAProducer_WhenSuccessful(){
         var producerToDelete = producerList.getFirst();
         BDDMockito.when(repository.findById(producerToDelete.getId())).thenReturn(Optional.of(producerToDelete));
 
@@ -126,13 +126,11 @@ class ProducerServiceTest {
     @Test
     @DisplayName("Update updates a producer")
     @Order(9)
-    void update_UpdatesProducer_WhenSucessful(){
-        var producerToUpdate = producerList.getFirst();
-        producerToUpdate.setName("SARU");
+    void update_UpdatesProducer_WhenSuccessful(){
+        var producerToUpdate = producerList.getFirst().withName("SARU"); //with serve como um set
 
         BDDMockito.when(repository.findById(producerToUpdate.getId())).thenReturn(Optional.of(producerToUpdate));
-
-        service.update(producerToUpdate);
+        BDDMockito.when(repository.save(producerToUpdate)).thenReturn(producerToUpdate);
 
         Assertions.assertThatNoException().isThrownBy(() -> service.update(producerToUpdate));
     }

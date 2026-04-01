@@ -10,6 +10,7 @@ import lombok.*;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "devdojo_user")
 public class User {
     @EqualsAndHashCode.Include
     @Id

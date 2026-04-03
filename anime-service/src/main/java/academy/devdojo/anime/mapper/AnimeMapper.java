@@ -19,7 +19,7 @@ public interface AnimeMapper {
 
     AnimePostResponse toPostAnimeResponse(Anime anime);
 
-    AnimeGetResponse toAnimeResponse(Anime anime);
+    AnimeGetResponse toAnimeGetResponse(Anime anime);
 
     AnimePutResponse toAnimePutResponse(Anime anime);
 

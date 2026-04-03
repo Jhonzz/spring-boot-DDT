@@ -11,6 +11,8 @@ import academy.devdojo.domain.Anime;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -27,11 +29,19 @@ public class AnimeController {
 
     @GetMapping()
     public ResponseEntity<List<AnimeGetResponse>> findAll(@RequestParam(required = false) String animeName) {
-
+        log.info("Request received to list all animes, param name '{}'", animeName);
         var animes = service.findAll(animeName);
         var response = mapper.toAnimeResponseList(animes);
 
         return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/paginated")
+    public ResponseEntity<Page<AnimeGetResponse>> findAllPaginated(Pageable pageable) {
+        log.info("Request received to list all animes paginated");
+
+        var pageAnimeGetResponse = service.findAllPaginated(pageable).map(mapper::toAnimeGetResponse);
+        return ResponseEntity.ok(pageAnimeGetResponse);
     }
 
     @GetMapping("{id}")
@@ -39,7 +49,7 @@ public class AnimeController {
         log.debug("Request to find anime by id {}", id);
 
         Anime animeFound = service.findByIdOrThrowNotFoundException(id);
-        AnimeGetResponse response = mapper.toAnimeResponse(animeFound);
+        AnimeGetResponse response = mapper.toAnimeGetResponse(animeFound);
 
         return ResponseEntity.ok(response);
     }

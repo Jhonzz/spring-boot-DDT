@@ -6,6 +6,7 @@ import academy.devdojo.exception.NotFoundException;
 import academy.devdojo.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -22,6 +23,7 @@ public class UserService {
         return repository.findById(id).orElseThrow(() -> new NotFoundException("User not found"));
     }
 
+//    @Transactional(rollbackFor = Exception.class)  won't save if find an error (doesn't rollback on checked exceptions if doesn't put in rollbackFor)
     public User save(User user){
         assertEmailDoesNotExist(user.getEmail());
         return repository.save(user);

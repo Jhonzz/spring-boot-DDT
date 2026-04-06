@@ -12,6 +12,9 @@ import org.mockito.BDDMockito;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Collections;
@@ -36,9 +39,9 @@ class AnimeServiceTest {
     }
 
     @Test
-    @DisplayName("FindAll returns all animes when parameter is null")
+    @DisplayName("findAll returns all animes when parameter is null")
     @Order(1)
-    void findByName_ReturnsAllAnimes_WhenParameterIsNull(){
+    void findAll_ReturnsAllAnimes_WhenParameterIsNull(){
         BDDMockito.when(repository.findAll()).thenReturn(animeList);
 
         var animes = service.findAll(null);
@@ -47,7 +50,21 @@ class AnimeServiceTest {
     }
 
     @Test
-    @DisplayName("FindByName returns anime with given name")
+    @DisplayName("findAllPaginated returns a paginated list of animes")
+    @Order(1)
+    void findAllPaginated_ReturnsAllAnimes_WhenParameterIsNull(){
+        var pageRequest = PageRequest.of(0, animeList.size());
+        var pageAnime = new PageImpl<>(animeList, pageRequest, 1);
+
+        BDDMockito.when(repository.findAll(BDDMockito.any(Pageable.class))).thenReturn(pageAnime);
+
+        var paginatedAnimes = service.findAllPaginated(pageRequest);
+
+        Assertions.assertThat(paginatedAnimes).isNotEmpty().hasSameElementsAs(animeList);
+    }
+
+    @Test
+    @DisplayName("findByName returns anime with given name")
     @Order(2)
     void findByName_ReturnsFoundAnime_WhenParameterIsNotNull(){
         var anime = animeList.getFirst();
@@ -59,7 +76,7 @@ class AnimeServiceTest {
     }
 
     @Test
-    @DisplayName("FindByName returns empty list when anime is not found")
+    @DisplayName("findByName returns empty list when anime is not found")
     @Order(3)
     void findByName_ReturnsEmptyList_WhenAnimeIsNotFound(){
         var name = "not_found";
@@ -70,7 +87,7 @@ class AnimeServiceTest {
     }
 
     @Test
-    @DisplayName("FindById returns anime with given id")
+    @DisplayName("findById returns anime with given id")
     @Order(4)
     void findById_ReturnsAnime_WhenParameterIsNotNull(){
         var anime = animeList.getFirst();
@@ -81,7 +98,7 @@ class AnimeServiceTest {
     }
 
     @Test
-    @DisplayName("FindById throws ResponseStatusException when anime is not found")
+    @DisplayName("findById throws ResponseStatusException when anime is not found")
     @Order(5)
     void findById_ThrowsResponseStatusException_WhenAnimeIsNotFound(){
         var anime = animeList.getFirst();

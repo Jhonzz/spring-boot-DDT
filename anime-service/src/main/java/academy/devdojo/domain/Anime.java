@@ -12,6 +12,7 @@ import lombok.*;
 @Data
 @Builder
 @EqualsAndHashCode(onlyExplicitlyIncluded = true) //<-------------
+@ToString
 public class Anime {
     @EqualsAndHashCode.Include
     //independente se tiver um outro nome ira adequar o mesmo comportamento caso o id seja igual <-----------

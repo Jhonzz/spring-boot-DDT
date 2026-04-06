@@ -1,0 +1,45 @@
+{
+  "content": [
+    {
+      "id": 1,
+      "name": "HunterxHunter"
+    },
+    {
+      "id": 2,
+      "name": "Naruto"
+    },
+    {
+      "id": 3,
+      "name": "One piece"
+    },
+    {
+      "id": 4,
+      "name": "Dandadan"
+    }
+  ],
+  "pageable": {
+    "pageNumber": 0,
+    "pageSize": 4,
+    "sort": {
+      "empty": true,
+      "sorted": false,
+      "unsorted": true
+    },
+    "offset": 0,
+    "paged": true,
+    "unpaged": false
+  },
+  "last": true,
+  "totalElements": 4,
+  "totalPages": 1,
+  "size": 4,
+  "number": 0,
+  "sort": {
+    "empty": true,
+    "sorted": false,
+    "unsorted": true
+  },
+  "first": true,
+  "numberOfElements": 4,
+  "empty": false
+}

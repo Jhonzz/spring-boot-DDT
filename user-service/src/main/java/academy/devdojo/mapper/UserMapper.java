@@ -14,7 +14,7 @@ import java.util.List;
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
 public interface UserMapper {
 
-  User toUser(UserPostRequest userPostRequest);
+    User toUser(UserPostRequest userPostRequest);
 
     User toUser(UserPutRequest request);
 

@@ -17,16 +17,16 @@ public class ProfileUtils {
 
      public Profile newProfileToSave(){
        return Profile.builder()
-               .name("ProfileExample")
-               .description("Description example")
+               .name("Regular user")
+               .description("Regular user with regular permissions")
                .build();
      }
 
      public Profile newProfileSaved(){
        return Profile.builder()
                .id(99L)
-               .name("ProfileExample")
-               .description("Description example")
+               .name("Regular user")
+               .description("Regular user with regular permissions")
                .build();
      }
 

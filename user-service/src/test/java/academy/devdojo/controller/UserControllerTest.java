@@ -3,6 +3,8 @@ package academy.devdojo.controller;
 import academy.devdojo.commons.FileUtils;
 import academy.devdojo.commons.UserUtils;
 import academy.devdojo.domain.User;
+import academy.devdojo.repository.ProfileRepository;
+import academy.devdojo.repository.UserProfileRepository;
 import academy.devdojo.repository.UserRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.*;
@@ -11,6 +13,7 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.mockito.ArgumentMatchers;
 import org.mockito.BDDMockito;
+import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -28,13 +31,17 @@ import java.util.stream.Stream;
 
 @WebMvcTest(controllers = UserController.class)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-@ComponentScan(basePackages = "academy.devdojo")
+@ComponentScan(basePackages = {"academy.devdojo"})
 class UserControllerTest {
     private static final String URL = "/v1/users";
     @Autowired
     private MockMvc mockMvc;
     @MockBean
     private UserRepository repository;
+    @MockBean
+    private ProfileRepository profileRepository;
+    @MockBean
+    private UserProfileRepository userProfileRepository;
     private List<User> userList;
     @Autowired
     private FileUtils fileUtils;

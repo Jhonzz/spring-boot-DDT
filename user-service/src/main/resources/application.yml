@@ -20,6 +20,8 @@ spring:
 logging:
   level:
     academy.devdojo: debug
+    net.ttddyy.dsproxy.listener: debug
+#    org.hibernate.orm.jdbc.bind: trace
 server:
   port: 8090
 

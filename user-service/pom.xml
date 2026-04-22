@@ -43,6 +43,12 @@
         </dependency>
 
         <dependency>
+            <groupId>com.github.gavlyukovskiy</groupId>
+            <artifactId>datasource-proxy-spring-boot-starter</artifactId>
+            <version>1.9.2</version>
+        </dependency>
+
+        <dependency>
             <groupId>academy.devdojo</groupId>
             <artifactId>commons-core</artifactId>
             <version>${commons-core.version}</version>

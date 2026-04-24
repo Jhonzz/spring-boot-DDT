@@ -10,6 +10,8 @@ import lombok.*;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
+@NamedEntityGraph(name = "UserProfile.fullDetails",
+        attributeNodes = {@NamedAttributeNode("user"), @NamedAttributeNode("profile")})
 public class UserProfile {
     @EqualsAndHashCode.Include
     @Id

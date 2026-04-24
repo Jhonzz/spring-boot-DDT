@@ -3,6 +3,8 @@ package academy.devdojo.domain;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
+
 @With
 @Data
 @Builder
@@ -22,4 +24,7 @@ public class User {
     private String lastName;
     @Column(nullable = false, unique = true)
     private String email;
+//    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY) //will return for only necessary return
+//    @ToString.Exclude //Exclude for bidirectional relation
+//    private List<UserProfile> userProfiles;
 }

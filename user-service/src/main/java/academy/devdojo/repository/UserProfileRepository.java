@@ -8,6 +8,7 @@ import java.util.List;
 
 public interface UserProfileRepository extends JpaRepository<UserProfile, Long> {
 
+    @Override
     @Query("SELECT up FROM UserProfile up join fetch up.user u join fetch up.profile p")
-    List<UserProfile> retrieveAll();
+    List<UserProfile> findAll();
 }

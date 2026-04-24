@@ -13,6 +13,6 @@ public class UserProfileService {
     private final UserProfileRepository repository;
 
     public List<UserProfile> findAll(){
-        return repository.retrieveAll();
+        return repository.findAll();
     }
 }

@@ -2,13 +2,10 @@ package academy.devdojo.controller;
 
 import academy.devdojo.DTO.response.UserProfileGetResponse;
 import academy.devdojo.DTO.response.UserProfileUserGetResponse;
-import academy.devdojo.domain.User;
-import academy.devdojo.domain.UserProfile;
 import academy.devdojo.mapper.UserProfileMapper;
 import academy.devdojo.service.UserProfileService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.coyote.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -36,7 +33,7 @@ public class UserProfileController {
     public ResponseEntity<List<UserProfileUserGetResponse>> findUsersByProfileId(@PathVariable Long id){
         log.info("Request received to list all users with given profile id '{}'", id);
 
-        var foundUsers = service.findUsersByProfileId(id);
+        var foundUsers = service.findAllUsersByProfileId(id);
         var response = MAPPER.toUserProfileUserGetResponse(foundUsers);
 
         return ResponseEntity.ok(response);

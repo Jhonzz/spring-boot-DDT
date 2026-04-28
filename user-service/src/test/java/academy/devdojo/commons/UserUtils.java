@@ -20,7 +20,10 @@ public class UserUtils {
         }
     }
      public User userToSave(){
-       return User.builder().id(99L).firstName("Gon").lastName("Freecss").email("gon.freecss@HXH.com").build();
+       return User.builder().firstName("Gon").lastName("Freecss").email("gon.freecss@HXH.com").build();
      }
 
+    public User newUserSaved(){
+        return User.builder().id(1L).firstName("Gon").lastName("Freecss").email("gon.freecss@HXH.com").build();
+    }
 }

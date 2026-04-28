@@ -1,1 +1,1 @@
-insert into devdojo_user (email,first_name,last_name) values ('gon.freecss@HXH.com','Gon','Freecss')
+insert into devdojo_user (email,first_name,last_name) values ('gon.freecss@HXH.com','Gon','Freecss');

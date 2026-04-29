@@ -27,7 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
-@WebMvcTest(controllers = ProfileController.class)
+@WebMvcTest(controllers = ProfileController.class) //sliced tests
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @ComponentScan(basePackages = {"academy.devdojo"})
 public class ProfileControllerTest {

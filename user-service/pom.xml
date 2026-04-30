@@ -26,6 +26,8 @@
         <commons-core.version>0.0.1-SNAPSHOT</commons-core.version>
         <mysql-connector-j.version>9.0.0</mysql-connector-j.version>
         <maven-surefire-plugin.version>3.5.4</maven-surefire-plugin.version>
+        <json-unit-assertj.version>5.1.1</json-unit-assertj.version>
+        <datasource-proxy-spring-boot-starter.version>1.9.2</datasource-proxy-spring-boot-starter.version>
     </properties>
 
     <dependencies>
@@ -45,8 +47,9 @@
         <dependency>
             <groupId>com.github.gavlyukovskiy</groupId>
             <artifactId>datasource-proxy-spring-boot-starter</artifactId>
-            <version>1.9.2</version>
+            <version>${datasource-proxy-spring-boot-starter.version}</version>
         </dependency>
+
 
         <dependency>
             <groupId>academy.devdojo</groupId>
@@ -99,6 +102,14 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- Dependency for timestamp in integration tests-->
+        <dependency>
+            <groupId>net.javacrumbs.json-unit</groupId>
+            <artifactId>json-unit-assertj</artifactId>
+            <version>${json-unit-assertj.version}</version>
             <scope>test</scope>
         </dependency>
 

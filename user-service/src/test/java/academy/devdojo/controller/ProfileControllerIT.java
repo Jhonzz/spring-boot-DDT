@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.context.annotation.Import;
+import org.springframework.context.annotation.Profile;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
 import org.springframework.test.context.jdbc.Sql;
@@ -26,7 +27,7 @@ import java.util.stream.Stream;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @Transactional
 //@Import(TestcontainersConfiguration.class)
-class ProfileControllerIT {git c
+class ProfileControllerIT {
     private static final String URL = "/v1/profiles";
     @Autowired
     private TestRestTemplate testRestTemplate;

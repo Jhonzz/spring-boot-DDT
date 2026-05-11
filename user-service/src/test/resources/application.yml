@@ -11,4 +11,4 @@ spring:
       ddl-auto: update
     properties:
       hibernate:
-        globally_quoted_identification: true
+        globally_quoted_identifiers: true

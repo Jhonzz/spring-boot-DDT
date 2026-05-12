@@ -9,7 +9,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.3.4</version>
+        <version>3.5.14</version>
         <relativePath/>
     </parent>
 
@@ -24,7 +24,7 @@
         <org.mapstruct.version>1.6.3</org.mapstruct.version>
         <lombok-mapstruct-binding.version>0.2.0</lombok-mapstruct-binding.version>
         <commons-core.version>0.0.1-SNAPSHOT</commons-core.version>
-        <mysql-connector-j.version>9.0.0</mysql-connector-j.version>
+        <mysql-connector-j.version>8.3.0</mysql-connector-j.version>
         <maven-surefire-plugin.version>3.5.4</maven-surefire-plugin.version>
         <json-unit-assertj.version>5.1.1</json-unit-assertj.version>
         <datasource-proxy-spring-boot-starter.version>1.9.2</datasource-proxy-spring-boot-starter.version>

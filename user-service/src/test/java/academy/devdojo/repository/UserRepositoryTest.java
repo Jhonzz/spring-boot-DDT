@@ -1,6 +1,7 @@
 package academy.devdojo.repository;
 
 import academy.devdojo.commons.UserUtils;
+import academy.devdojo.config.IntegrationTestConfig;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +15,7 @@ import org.springframework.test.context.jdbc.Sql;
 @Import(UserUtils.class)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 //@Transactional(propagation = Propagation.NOT_SUPPORTED) //it wont rollback when do a test before execute next test
-public class UserRepositoryTest {
+public class UserRepositoryTest extends IntegrationTestConfig {
 
     @Autowired
     private UserRepository repository;

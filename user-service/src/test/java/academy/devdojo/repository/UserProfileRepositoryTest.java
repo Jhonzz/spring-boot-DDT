@@ -1,6 +1,7 @@
 package academy.devdojo.repository;
 
 import academy.devdojo.commons.UserUtils;
+import academy.devdojo.config.IntegrationTestConfig;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,10 +12,10 @@ import org.springframework.test.context.jdbc.Sql;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE) //Jpa won't replace the in memory database
-@Import({UserUtils.class})
+@Import(UserUtils.class)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 //@Transactional(propagation = Propagation.NOT_SUPPORTED) //it wont rollback when do a test before execute next test
-public class UserProfileRepositoryTest {
+public class UserProfileRepositoryTest extends IntegrationTestConfig {
 
     @Autowired
     private UserProfileRepository repository;

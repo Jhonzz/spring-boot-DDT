@@ -28,6 +28,7 @@
         <maven-surefire-plugin.version>3.5.4</maven-surefire-plugin.version>
         <json-unit-assertj.version>5.1.1</json-unit-assertj.version>
         <datasource-proxy-spring-boot-starter.version>1.9.2</datasource-proxy-spring-boot-starter.version>
+        <rest-assured.version>5.5.0</rest-assured.version>
     </properties>
 
     <dependencies>
@@ -112,6 +113,14 @@
             <scope>test</scope>
         </dependency>
 
+        <!-- Source: https://mvnrepository.com/artifact/io.rest-assured/rest-assured -->
+        <dependency>
+            <groupId>io.rest-assured</groupId>
+            <artifactId>rest-assured</artifactId>
+            <version>${rest-assured.version}</version>
+            <scope>test</scope>
+        </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-testcontainers</artifactId>
@@ -123,6 +132,7 @@
             <artifactId>mysql</artifactId>
             <scope>test</scope>
         </dependency>
+
 
         <dependency>
             <groupId>com.h2database</groupId>

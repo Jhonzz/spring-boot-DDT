@@ -1,12 +1,1 @@
-[
-  {
-    "id": 1,
-    "name": "Admin",
-    "description": "Admins everything"
-  },
-  {
-    "id": 2,
-    "name": "Manager",
-    "description": "Manages users"
-  }
-]
+[{"id":1,"name":"Admin","description":"Admins everything"},{"id":2,"name":"Manager","description":"Manages users"}]

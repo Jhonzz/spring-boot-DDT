@@ -1,4 +1,4 @@
-package academy.devdojo.DTO.response;
+package academy.devdojo.dto.response;
 
 import lombok.*;
 

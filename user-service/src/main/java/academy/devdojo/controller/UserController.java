@@ -1,10 +1,10 @@
 package academy.devdojo.controller;
 
-import academy.devdojo.DTO.request.UserPostRequest;
-import academy.devdojo.DTO.request.UserPutRequest;
-import academy.devdojo.DTO.response.UserGetResponse;
-import academy.devdojo.DTO.response.UserPostResponse;
-import academy.devdojo.DTO.response.UserPutResponse;
+import academy.devdojo.dto.request.UserPostRequest;
+import academy.devdojo.dto.request.UserPutRequest;
+import academy.devdojo.dto.response.UserGetResponse;
+import academy.devdojo.dto.response.UserPostResponse;
+import academy.devdojo.dto.response.UserPutResponse;
 import academy.devdojo.mapper.UserMapper;
 import academy.devdojo.service.UserService;
 import jakarta.validation.Valid;

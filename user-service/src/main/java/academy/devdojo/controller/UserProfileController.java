@@ -1,7 +1,7 @@
 package academy.devdojo.controller;
 
-import academy.devdojo.DTO.response.UserProfileGetResponse;
-import academy.devdojo.DTO.response.UserProfileUserGetResponse;
+import academy.devdojo.dto.response.UserProfileGetResponse;
+import academy.devdojo.dto.response.UserProfileUserGetResponse;
 import academy.devdojo.mapper.UserProfileMapper;
 import academy.devdojo.service.UserProfileService;
 import lombok.RequiredArgsConstructor;

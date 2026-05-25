@@ -1,4 +1,4 @@
-package academy.devdojo.DTO.request;
+package academy.devdojo.dto.request;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;

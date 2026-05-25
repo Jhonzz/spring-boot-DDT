@@ -1,9 +1,8 @@
 package academy.devdojo.controller;
 
-import academy.devdojo.DTO.request.ProfilePostRequest;
-import academy.devdojo.DTO.response.ProfileGetResponse;
-import academy.devdojo.DTO.response.ProfilePostResponse;
-import academy.devdojo.domain.Profile;
+import academy.devdojo.dto.request.ProfilePostRequest;
+import academy.devdojo.dto.response.ProfileGetResponse;
+import academy.devdojo.dto.response.ProfilePostResponse;
 import academy.devdojo.mapper.ProfileMapper;
 import academy.devdojo.service.ProfileService;
 import jakarta.validation.Valid;

@@ -1,7 +1,7 @@
 package academy.devdojo.mapper;
 
-import academy.devdojo.DTO.response.UserProfileGetResponse;
-import academy.devdojo.DTO.response.UserProfileUserGetResponse;
+import academy.devdojo.dto.response.UserProfileGetResponse;
+import academy.devdojo.dto.response.UserProfileUserGetResponse;
 import academy.devdojo.domain.User;
 import academy.devdojo.domain.UserProfile;
 import org.mapstruct.Mapper;

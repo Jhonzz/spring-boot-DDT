@@ -1,7 +1,7 @@
 package academy.devdojo.controller;
 
-import academy.devdojo.DTO.response.ProfileGetResponse;
-import academy.devdojo.DTO.response.ProfilePostResponse;
+import academy.devdojo.dto.response.ProfileGetResponse;
+import academy.devdojo.dto.response.ProfilePostResponse;
 import academy.devdojo.commons.FileUtils;
 import academy.devdojo.config.IntegrationTestConfig;
 import net.javacrumbs.jsonunit.assertj.JsonAssertions;

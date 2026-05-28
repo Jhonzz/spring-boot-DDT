@@ -1,0 +1,1 @@
+DELETE FROM devdojo_user WHERE 1=1

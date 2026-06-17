@@ -29,6 +29,8 @@ server:
     context-path: /
   error:
     include-stacktrace: ON_PARAM #?trace=true
+    include-binding-errors: always
+    include-message: always
   tomcat:
     threads:
       max: 20

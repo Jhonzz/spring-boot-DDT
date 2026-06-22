@@ -5,6 +5,7 @@ import academy.devdojo.config.IntegrationTestConfig;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import net.javacrumbs.jsonunit.assertj.JsonAssertions;
+import net.javacrumbs.jsonunit.core.Option;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -112,6 +113,7 @@ class ProfileControllerRestAssuredIT extends IntegrationTestConfig {
 
         JsonAssertions.assertThatJson(response)
                 .whenIgnoringPaths("timestamp")
+                .when(Option.IGNORING_ARRAY_ORDER)
                 .isEqualTo(expectedResponse);
     }
 

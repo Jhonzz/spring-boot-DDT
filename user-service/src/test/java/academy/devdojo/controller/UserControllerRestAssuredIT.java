@@ -288,11 +288,45 @@ class UserControllerRestAssuredIT extends IntegrationTestConfig {
                 .isEqualTo(expectedResponse);
     }
 
+    @ParameterizedTest
+    @MethodSource("putUserBadRequestSource")
+    @DisplayName("PUT v1/users returns bad request when fields are invalid")
+    @Order(12)
+    void update_ReturnsBadRequest_WhenFieldsAreInvalid(String requestFile, String responseFile) {
+        var request = fileUtils.readResourceFile("user/%s".formatted(requestFile));
+        var expectedResponse = fileUtils.readResourceFile("user/%s".formatted(responseFile));
+
+        var response = RestAssured.given()
+                .contentType(ContentType.JSON).accept(ContentType.JSON)
+                .when()
+                .body(request)
+                .put(URL)
+                .then()
+                .statusCode(HttpStatus.BAD_REQUEST.value())
+                .log().all().
+                extract().response().body().asString();
+
+        JsonAssertions.assertThatJson(response)
+                .whenIgnoringPaths("timestamp")
+                .when(Option.IGNORING_ARRAY_ORDER)
+                .isEqualTo(expectedResponse);
+    }
+
     private static Stream<Arguments> postUserBadRequestSource() {
+
         return Stream.of(
                 Arguments.of("post-request-user-blank-fields-400.json", "post-response-user-blank-fields-400.json"),
                 Arguments.of("post-request-user-empty-fields-400.json", "post-response-user-empty-fields-400.json"),
                 Arguments.of("post-request-user-invalid-email-400.json", "post-response-user-invalid-email-400.json")
+        );
+    }
+
+    private static Stream<Arguments> putUserBadRequestSource() {
+
+        return Stream.of(
+                Arguments.of("put-request-user-blank-fields-400.json", "put-response-user-blank-fields-400.json"),
+                Arguments.of("put-request-user-empty-fields-400.json", "put-response-user-empty-fields-400.json"),
+                Arguments.of("put-request-user-invalid-email-400.json", "put-response-user-invalid-email-400.json")
         );
     }
 }

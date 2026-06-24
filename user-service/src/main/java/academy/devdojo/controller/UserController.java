@@ -5,8 +5,8 @@ import academy.devdojo.dto.request.UserPutRequest;
 import academy.devdojo.dto.response.UserGetResponse;
 import academy.devdojo.dto.response.UserPostResponse;
 import academy.devdojo.dto.response.UserPutResponse;
+import academy.devdojo.exception.ApiError;
 import academy.devdojo.exception.DefaultErrorMessage;
-import academy.devdojo.exception.NotFoundException;
 import academy.devdojo.mapper.UserMapper;
 import academy.devdojo.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -22,6 +22,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.HttpClientErrorException;
 
 import java.util.List;
 
@@ -73,6 +74,15 @@ public class UserController {
     }
 
     @PostMapping
+    @Operation(summary = "Creates user",
+            responses = {
+                    @ApiResponse(description = "Save user in the database",
+                            responseCode = "201",
+                            content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = UserPostResponse.class))),
+                    @ApiResponse(description = "Bad request",
+                    responseCode = "400",
+                    content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ApiError.class)))
+            })
     private ResponseEntity<UserPostResponse> save(@RequestBody @Valid UserPostRequest request) {
         log.debug("Request to save user: {}", request);
         var userToSave = mapper.toUser(request);

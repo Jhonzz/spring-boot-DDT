@@ -29,6 +29,7 @@
         <json-unit-assertj.version>5.1.1</json-unit-assertj.version>
         <datasource-proxy-spring-boot-starter.version>1.9.2</datasource-proxy-spring-boot-starter.version>
         <rest-assured.version>5.5.0</rest-assured.version>
+        <springdoc-openapi-starter-webmvc-ui.version>2.8.13</springdoc-openapi-starter-webmvc-ui.version>
     </properties>
 
     <dependencies>
@@ -49,6 +50,14 @@
             <groupId>com.github.gavlyukovskiy</groupId>
             <artifactId>datasource-proxy-spring-boot-starter</artifactId>
             <version>${datasource-proxy-spring-boot-starter.version}</version>
+        </dependency>
+
+        <!-- Source: https://mvnrepository.com/artifact/org.springdoc/springdoc-openapi-starter-webmvc-ui -->
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+            <version>${springdoc-openapi-starter-webmvc-ui.version}</version>
+            <scope>compile</scope>
         </dependency>
 
         <dependency>

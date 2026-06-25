@@ -1,1 +1,7 @@
-{"timestamp":"2026-06-22T01:58:37.450+00:00","status":400,"error":"Bad Request","message":"Validation failed for object='profilePostRequest'. Error count: 2","errors":[{"objectName":"profilePostRequest","field":"name","rejectedValue":null,"codes":["NotBlank.profilePostRequest.name","NotBlank.name","NotBlank.java.lang.String","NotBlank"],"arguments":[{"codes":["profilePostRequest.name","name"],"arguments":null,"defaultMessage":"name","code":"name"}],"defaultMessage":"Field name can't be empty","bindingFailure":false,"code":"NotBlank"},{"objectName":"profilePostRequest","field":"description","rejectedValue":"","codes":["NotBlank.profilePostRequest.description","NotBlank.description","NotBlank.java.lang.String","NotBlank"],"arguments":[{"codes":["profilePostRequest.description","description"],"arguments":null,"defaultMessage":"description","code":"description"}],"defaultMessage":"Field description can't be empty","bindingFailure":false,"code":"NotBlank"}],"path":"/v1/profiles"}
+{
+  "timestamp": "2026-06-25T18:58:37.5489875-03:00",
+  "status": 400,
+  "error": "Bad Request",
+  "message": "Field description can't be empty, Field name can't be empty",
+  "path": "/v1/profiles"
+}

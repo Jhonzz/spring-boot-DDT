@@ -8,6 +8,7 @@
 	<packaging>pom</packaging>
 
 	<modules>
+		<module>parent-project</module>
 		<module>commons-core</module>
 		<module>anime-service</module>
 		<module>user-service</module>

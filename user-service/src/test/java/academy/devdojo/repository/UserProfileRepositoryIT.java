@@ -15,7 +15,7 @@ import org.springframework.test.context.jdbc.Sql;
 @Import(UserUtils.class)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 //@Transactional(propagation = Propagation.NOT_SUPPORTED) //it wont rollback when do a test before execute next test
-public class UserProfileRepositoryTest extends IntegrationTestConfig {
+public class UserProfileRepositoryIT extends IntegrationTestConfig {
 
     @Autowired
     private UserProfileRepository repository;

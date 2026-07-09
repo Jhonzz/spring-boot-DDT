@@ -14,6 +14,7 @@
     </parent>
 
     <artifactId>user-service</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
     <name>user-service</name>
     <description>Projeto exemplo com Spring Boot</description>
 
@@ -71,7 +72,6 @@
             <artifactId>mysql</artifactId>
             <scope>test</scope>
         </dependency>
-
 
         <dependency>
             <groupId>com.h2database</groupId>

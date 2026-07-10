@@ -1,4 +1,8 @@
 spring:
+  security:
+    user:
+      name: user
+      password: devdojo
   config:
     import: optional:classpath:.env[.properties]
     profiles:

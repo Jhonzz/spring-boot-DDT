@@ -24,8 +24,9 @@ spring:
 logging:
   level:
     academy.devdojo: debug
-    net.ttddyy.dsproxy.listener: debug
+#    net.ttddyy.dsproxy.listener: debug database logs
 #    org.hibernate.orm.jdbc.bind: trace
+    org.springframework.security: debug
 server:
   port: 8090
 

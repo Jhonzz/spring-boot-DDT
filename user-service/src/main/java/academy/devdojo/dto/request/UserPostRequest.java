@@ -4,8 +4,13 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
-@Data
+@Getter
+@Setter
+@ToString
 public class UserPostRequest {
     @NotBlank(message = "The field 'firstName' is required")//pelo menos um caractere que nao seja null, nao pode ser null nem vazio
     @Schema(description = "User's first name", example = "Gojo")
@@ -17,4 +22,6 @@ public class UserPostRequest {
     @Email(regexp = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,10}$", message = "E-mail is not valid")
     @Schema(description = "User's email. Must be unique", example = "gojoSatoru@gmail.com")
     private String email;
+    @NotBlank(message = "The field 'password' is required")
+    private String password;
 }

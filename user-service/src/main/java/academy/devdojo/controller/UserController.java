@@ -34,7 +34,6 @@ import java.util.List;
 @Slf4j
 @RequiredArgsConstructor
 @Tag(name = "User API", description = "User related endpoints")
-@EnableMethodSecurity
 @SecurityRequirement(name = "basicAuth")
 public class UserController {
     private final UserService service;
@@ -70,7 +69,7 @@ public class UserController {
                             content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = DefaultErrorMessage.class))
                     )}
     )
-    private ResponseEntity<UserGetResponse> findById(@PathVariable Long id) {
+    public ResponseEntity<UserGetResponse> findById(@PathVariable Long id) {
         log.debug("Request to find User by id {}", id);
 
         var userFound = service.findByIdOrNotFoundException(id);
@@ -89,7 +88,7 @@ public class UserController {
                     responseCode = "400",
                     content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ApiError.class)))
             })
-    private ResponseEntity<UserPostResponse> save(@RequestBody @Valid UserPostRequest request) {
+    public ResponseEntity<UserPostResponse> save(@RequestBody @Valid UserPostRequest request) {
         log.debug("Request to save user: {}", request);
         var userToSave = mapper.toUser(request);
 
@@ -101,7 +100,7 @@ public class UserController {
     }
 
     @PutMapping
-    private ResponseEntity<UserPutResponse> update(@RequestBody @Valid UserPutRequest request) {
+    public ResponseEntity<UserPutResponse> update(@RequestBody @Valid UserPutRequest request) {
         var userToUpdate = mapper.toUser(request);
 
         service.update(userToUpdate);
@@ -112,7 +111,7 @@ public class UserController {
     }
 
     @DeleteMapping("{id}")
-    private ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
         log.debug("Request to delete user: {}", id);
 
         service.delete(id);

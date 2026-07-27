@@ -50,7 +50,8 @@ public class SecurityConfig {
 //                        .csrfTokenRequestHandler(new CsrfTokenRequestAttributeHandler()))
                 .authorizeHttpRequests(auth -> auth.requestMatchers(WHITE_LIST).permitAll()
                         .requestMatchers(HttpMethod.POST,"v1/users").permitAll()
-                        .requestMatchers(HttpMethod.DELETE,"v1/users/*").hasRole("ADMIN") //protect v1/users/1, if ** protects all parameters after users
+                        .requestMatchers(HttpMethod.DELETE,"v1/users/*").hasAuthority("ADMIN") //protect v1/users/1, if ** protects all parameters after users
+                        //if use .hasRole you need add in database "ROLE_" for example "ROLE_" + ADMIN = ROLE_ADMIN
                         .anyRequest().authenticated())
                 .httpBasic(Customizer.withDefaults()) //popup in web requests to log in
                 .build();

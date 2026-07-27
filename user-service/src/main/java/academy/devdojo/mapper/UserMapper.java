@@ -1,12 +1,12 @@
 package academy.devdojo.mapper;
 
 import academy.devdojo.annotation.EncodedMapping;
+import academy.devdojo.domain.User;
 import academy.devdojo.dto.request.UserPostRequest;
 import academy.devdojo.dto.request.UserPutRequest;
 import academy.devdojo.dto.response.UserGetResponse;
 import academy.devdojo.dto.response.UserPostResponse;
 import academy.devdojo.dto.response.UserPutResponse;
-import academy.devdojo.domain.User;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingConstants;
@@ -20,6 +20,7 @@ public interface UserMapper {
     @Mapping(target = "password", qualifiedBy = EncodedMapping.class)
     User toUser(UserPostRequest userPostRequest);
 
+    @Mapping(target = "password", qualifiedBy = EncodedMapping.class)
     User toUser(UserPutRequest request);
 
     UserPutResponse toUserPutResponse(User user);

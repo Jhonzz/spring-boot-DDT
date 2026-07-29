@@ -7,9 +7,7 @@ import academy.devdojo.dto.request.UserPutRequest;
 import academy.devdojo.dto.response.UserGetResponse;
 import academy.devdojo.dto.response.UserPostResponse;
 import academy.devdojo.dto.response.UserPutResponse;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.MappingConstants;
+import org.mapstruct.*;
 
 import java.util.List;
 
@@ -30,4 +28,19 @@ public interface UserMapper {
     List<UserGetResponse> toUserGetResponseList(List<User> users);
 
     UserGetResponse toUserResponse(User user);
+
+    @Mapping(target = "password", source = "rawPassword", qualifiedBy = EncodedMapping.class)
+    @Mapping(target = "roles", source = "savedUser.roles")
+    @Mapping(target = "id", source = "userToUpdate.id")
+    @Mapping(target = "firstName", source = "userToUpdate.firstName")
+    @Mapping(target = "lastName", source = "userToUpdate.lastName")
+    @Mapping(target = "email", source = "userToUpdate.email")
+    User toUserWithPasswordAndRoles(User userToUpdate, String rawPassword, User savedUser);
+
+    @AfterMapping
+    default void setPasswordIfNull(@MappingTarget User user, String rawPassword, User savedUser){
+        if (rawPassword == null){
+            user.setPassword(savedUser.getPassword());
+        }
+    }
 }

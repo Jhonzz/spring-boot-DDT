@@ -3,10 +3,12 @@ package academy.devdojo.service;
 import academy.devdojo.commons.UserUtils;
 import academy.devdojo.domain.User;
 import academy.devdojo.exception.EmailAlreadyExistsException;
+import academy.devdojo.mapper.UserMapper;
 import academy.devdojo.repository.UserRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mapstruct.Mapper;
 import org.mockito.ArgumentMatchers;
 import org.mockito.BDDMockito;
 import org.mockito.InjectMocks;
@@ -18,19 +20,21 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
+import static org.mockito.ArgumentMatchers.any;
+
 @ExtendWith(MockitoExtension.class)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class UserServiceTest {
 
     @InjectMocks
     private UserService service;
-    
     @Mock
     private UserRepository repository;
-
     private List<User> userList;
     @InjectMocks
     private UserUtils userUtils;
+    @Mock
+    private UserMapper mapper;
 
     @BeforeEach
     void init(){
@@ -135,6 +139,7 @@ class UserServiceTest {
 
         BDDMockito.when(repository.findById(ArgumentMatchers.anyLong())).thenReturn(Optional.of(userToUpdate));
         BDDMockito.when(repository.save(userToUpdate)).thenReturn(userToUpdate);
+        BDDMockito.when(mapper.toUserWithPasswordAndRoles(any(), any(), any())).thenReturn(userToUpdate);
 
         Assertions.assertThatNoException().isThrownBy(() -> service.update(userToUpdate));
     }
@@ -170,7 +175,6 @@ class UserServiceTest {
         var lastUser = userList.getLast();
         var userToUpdate = userList.getFirst();
 
-        BDDMockito.when(repository.findById(userToUpdate.getId())).thenReturn(Optional.of(userToUpdate));
         BDDMockito.when(repository.findByEmailAndIdNot(userToUpdate.getEmail(), userToUpdate.getId())).thenReturn(Optional.of(lastUser));
 
         Assertions.

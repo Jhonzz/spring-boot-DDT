@@ -41,5 +41,4 @@ public class UserRepositoryIT extends IntegrationTestConfig {
         var users = repository.findAll();
         Assertions.assertThat(users).isNotEmpty();
     }
-
 }

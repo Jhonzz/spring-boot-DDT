@@ -1,4 +1,4 @@
-insert into devdojo_user (email,first_name,last_name) values ('ging.freecss@HXH.com','Ging','Freecss');
-insert into devdojo_user (email,first_name,last_name) values ('killua.zoldyck@HXH.com','Killua','Zoldyck');
-insert into devdojo_user (email,first_name,last_name) values ('meruem.komugi@HXH.com','Meruem','Komugi');
-insert into devdojo_user (email,first_name,last_name) values ('hisoka.morow@HXH.com','Hisoka','Morow');
+insert into devdojo_user (email,first_name,last_name,roles,password) values ('ging.freecss@HXH.com','Ging','Freecss','USER','{bcrypt}$2a$10$GuB62zrrf2dwNbd8UeERsu04s4xdQgiEs56ZurI3BU.28Z.eb3YoS');
+insert into devdojo_user (email,first_name,last_name,roles,password) values ('killua.zoldyck@HXH.com','Killua','Zoldyck','USER','{bcrypt}$2a$10$GuB62zrrf2dwNbd8UeERsu04s4xdQgiEs56ZurI3BU.28Z.eb3YoS');
+insert into devdojo_user (email,first_name,last_name,roles,password) values ('meruem.komugi@HXH.com','Meruem','Komugi','USER','{bcrypt}$2a$10$GuB62zrrf2dwNbd8UeERsu04s4xdQgiEs56ZurI3BU.28Z.eb3YoS');
+insert into devdojo_user (email,first_name,last_name,roles,password) values ('hisoka.morow@HXH.com','Hisoka','Morow','USER','{bcrypt}$2a$10$GuB62zrrf2dwNbd8UeERsu04s4xdQgiEs56ZurI3BU.28Z.eb3YoS');

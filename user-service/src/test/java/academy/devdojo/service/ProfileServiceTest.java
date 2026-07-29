@@ -2,6 +2,7 @@ package academy.devdojo.service;
 
 import academy.devdojo.commons.ProfileUtils;
 import academy.devdojo.domain.Profile;
+import academy.devdojo.mapper.PasswordEncoderMapper;
 import academy.devdojo.repository.ProfileRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.*;
@@ -10,6 +11,7 @@ import org.mockito.BDDMockito;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 
 import java.util.List;
 

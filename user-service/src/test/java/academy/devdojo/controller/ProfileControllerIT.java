@@ -16,6 +16,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.test.context.jdbc.Sql;
 
 import java.util.List;
@@ -36,6 +37,7 @@ class ProfileControllerIT extends IntegrationTestConfig {
     @Sql(value = "/sql/profile/clean_profiles.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
     @Order(1)
     void findAll_ReturnsAllProfiles_WhenSuccessful() {
+        PasswordEncoderFactories.createDelegatingPasswordEncoder().encode("test");
         var typeReference = new ParameterizedTypeReference<List<ProfileGetResponse>>() {};
         var responseEntity = testRestTemplate.exchange(URL, HttpMethod.GET, null, typeReference);
 

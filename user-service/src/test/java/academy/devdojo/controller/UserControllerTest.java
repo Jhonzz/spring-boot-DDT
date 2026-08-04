@@ -18,6 +18,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
@@ -31,6 +32,7 @@ import java.util.stream.Stream;
 @WebMvcTest(controllers = UserController.class)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @ComponentScan(basePackages = {"academy.devdojo"})
+@WithMockUser
 class UserControllerTest {
     private static final String URL = "/v1/users";
     @Autowired
@@ -54,6 +56,7 @@ class UserControllerTest {
 
     @Test
     @DisplayName("GET v1/users returns a list of users when parameter is null")
+    @WithMockUser(authorities = "ADMIN")
     @Order(1)
     void findAll_ReturnsAllUsers_WhenFirstNameIsNull() throws Exception {
         var response = fileUtils.readResourceFile("user/get-user-null-first-name-200.json");
@@ -69,6 +72,7 @@ class UserControllerTest {
 
     @Test
     @DisplayName("GET v1/users?firstName=Ging returns a list with the found user")
+    @WithMockUser(authorities = "ADMIN")
     @Order(2)
     void findByName_ReturnsUserFoundInList_WhenUserIsFound() throws Exception {
         var response = fileUtils.readResourceFile("user/get-user-ging-first-name-200.json");
@@ -85,6 +89,7 @@ class UserControllerTest {
 
     @Test
     @DisplayName("GET v1/users?firstName=x returns a empty list")
+    @WithMockUser(authorities = "ADMIN")
     @Order(3)
     void findByName_ReturnsEmptyList_WhenUserIsNotFound() throws Exception {
         var response = fileUtils.readResourceFile("user/get-user-x-first-name-200.json");
@@ -149,6 +154,7 @@ class UserControllerTest {
 
     @Test
     @DisplayName("DELETE v1/users removes an user")
+    @WithMockUser(authorities = "ADMIN")
     @Order(7)
     void delete_RemovesAnUser_WhenSuccessful() throws Exception {
         BDDMockito.when(repository.findAll()).thenReturn(userList);
@@ -164,6 +170,7 @@ class UserControllerTest {
 
     @Test
     @DisplayName("DELETE v1/users/99 throws NotFound when user is not found")
+    @WithMockUser(authorities = "ADMIN")
     @Order(8)
     void delete_ThrowsNotFound_WhenSuccessful() throws Exception {
         var response = fileUtils.readResourceFile("user/delete-response-user-by-id-404.json");

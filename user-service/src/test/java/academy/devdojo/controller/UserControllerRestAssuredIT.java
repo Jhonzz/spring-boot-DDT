@@ -2,10 +2,11 @@ package academy.devdojo.controller;
 
 import academy.devdojo.commons.FileUtils;
 import academy.devdojo.config.IntegrationTestConfig;
+import academy.devdojo.config.RestAssuredConfig;
 import academy.devdojo.repository.UserRepository;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
-import io.restassured.response.ValidatableResponse;
+import io.restassured.specification.RequestSpecification;
 import net.javacrumbs.jsonunit.assertj.JsonAssertions;
 import net.javacrumbs.jsonunit.core.Option;
 import org.assertj.core.api.Assertions;
@@ -15,30 +16,35 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
 import org.springframework.test.context.jdbc.Sql;
 
-import java.util.List;
 import java.util.stream.Stream;
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes = RestAssuredConfig.class)
 @TestMethodOrder(MethodOrderer.class)
 class UserControllerRestAssuredIT extends IntegrationTestConfig {
     private static final String URL = "/v1/users";
     @Autowired
     private FileUtils fileUtils;
-    @LocalServerPort
-    private int port;
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    @Qualifier(value = "requestSpecificationRegularUser")
+    private RequestSpecification requestSpecificationRegularUser;
+
+    @Autowired
+    @Qualifier(value = "requestSpecificationAdminUser")
+    private RequestSpecification requestSpecificationAdminUser;
+
     @BeforeEach
     void setUrl() {
-        RestAssured.baseURI = "http://localhost";
-        RestAssured.port = port;
+        RestAssured.requestSpecification = requestSpecificationRegularUser;
     }
+
 
     @Test
     @DisplayName("GET v1/users returns a list of users when parameter is null")
@@ -46,8 +52,11 @@ class UserControllerRestAssuredIT extends IntegrationTestConfig {
     @Sql(value = "/sql/user/clean_users.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
     @Order(1)
     void findAll_ReturnsAllUsers_WhenSuccessful() {
-        var response = fileUtils.readResourceFile("user/get-user-null-first-name-200.json");
-        var expectedResponse = RestAssured.given()
+        RestAssured.requestSpecification = requestSpecificationAdminUser;
+
+        var expectedResponse = fileUtils.readResourceFile("user/get-user-null-first-name-200.json");
+
+        var response = RestAssured.given()
                 .contentType(ContentType.JSON)
                 .when()
                 .get(URL)
@@ -64,9 +73,9 @@ class UserControllerRestAssuredIT extends IntegrationTestConfig {
                     users.node("[3].id").asNumber().isPositive();
                 });
 
-        JsonAssertions.assertThatJson(response)
+        JsonAssertions.assertThatJson(expectedResponse)
                 .whenIgnoringPaths("[*].id")
-                .isEqualTo(expectedResponse);
+                .isEqualTo(response);
     }
 
     @Test
@@ -75,6 +84,8 @@ class UserControllerRestAssuredIT extends IntegrationTestConfig {
     @Sql(value = "/sql/user/clean_users.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
     @Order(2)
     void findByName_ReturnsUserFoundInList_WhenUserIsFound() {
+        RestAssured.requestSpecification = requestSpecificationAdminUser;
+
         var expectedResponse = fileUtils.readResourceFile("user/get-user-ging-first-name-200.json");
         var firstName = "Ging";
 
@@ -101,6 +112,7 @@ class UserControllerRestAssuredIT extends IntegrationTestConfig {
     @DisplayName("GET v1/users?firstName=x returns a empty list")
     @Order(3)
     void findByName_ReturnsEmptyList_WhenUserIsNotFound() {
+        RestAssured.requestSpecification = requestSpecificationAdminUser;
         var expectedResponse = fileUtils.readResourceFile("user/get-user-x-first-name-200.json");
 
         RestAssured.given()
@@ -142,6 +154,8 @@ class UserControllerRestAssuredIT extends IntegrationTestConfig {
 
     @Test
     @DisplayName("GET v1/users/99 throws NotFound 404 when user is not found")
+    @Sql(value = "/sql/user/init_four_users.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+    @Sql(value = "/sql/user/clean_users.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
     @Order(5)
     void findById_ThrowsNotFound_WhenUserIsNotFound() {
         var expectedResponse = fileUtils.readResourceFile("user/get-response-user-by-id-404.json");
@@ -188,6 +202,7 @@ class UserControllerRestAssuredIT extends IntegrationTestConfig {
     @Sql(value = "/sql/user/init_one_user.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     @Order(7)
     void deleteUser_RemovesUser_WhenSuccessful() {
+        RestAssured.requestSpecification = requestSpecificationAdminUser;
         var id = userRepository.findAll().getFirst().getId();
 
         RestAssured.given()
@@ -204,6 +219,7 @@ class UserControllerRestAssuredIT extends IntegrationTestConfig {
     @DisplayName("DELETE v1/users/99 throws 404 NotFound Exception")
     @Order(8)
     void deleteUser_ThrowsNotFoundException_WhenUserDoesNotExists() {
+        RestAssured.requestSpecification = requestSpecificationAdminUser;
         var expectedResponse = fileUtils.readResourceFile("user/delete-response-user-by-id-404.json");
         var id = 99L;
 
@@ -226,7 +242,7 @@ class UserControllerRestAssuredIT extends IntegrationTestConfig {
     void update_UpdatesUser_WhenSuccessful() {
         var request = fileUtils.readResourceFile("user/put-request-user-200.json");
         var expectedResponse = fileUtils.readResourceFile("user/put-response-user-200..json");
-        var users = userRepository.findByFirstNameIgnoreCase("Ging");
+        var users = userRepository.findByFirstNameIgnoreCase("Meruem");
         request = request.replace("1", users.getFirst().getId().toString());
 
         Assertions.assertThat(users).hasSize(1);

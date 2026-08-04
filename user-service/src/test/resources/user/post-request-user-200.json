@@ -1,5 +1,6 @@
 {
   "email": "goku.son@DBZ.com",
   "firstName": "Goku",
-  "lastName": "Son"
+  "lastName": "Son",
+  "password": "test"
 }

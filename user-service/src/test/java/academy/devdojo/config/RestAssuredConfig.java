@@ -17,10 +17,18 @@ public class RestAssuredConfig {
     int port;
 
     @Bean(name = "requestSpecificationRegularUser")
-    public RequestSpecification requestSpecification(){
+    public RequestSpecification requestSpecificationRegularUser(){
          return RestAssured.given()
                  .baseUri(BASE_URI + port)
                  .auth().preemptive().basic(REGULAR_USERNAME, PASSWORD);
          //"preemptive" do the authentication and the request, with just "auth" he tries, returns error 401 and try again authenticated
+    }
+
+    @Bean(name = "requestSpecificationAdminUser")
+    public RequestSpecification requestSpecificationAdminUser(){
+        return RestAssured.given()
+                .baseUri(BASE_URI + port)
+                .auth().preemptive().basic(ADMIN_USERNAME, PASSWORD);
+        //"preemptive" do the authentication and the request, with just "auth" he tries, returns error 401 and try again authenticated
     }
 }

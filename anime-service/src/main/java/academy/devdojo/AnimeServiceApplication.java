@@ -9,5 +9,4 @@ public class AnimeServiceApplication {
     public static void main(String[] args) {
         SpringApplication.run(AnimeServiceApplication.class, args);
     }
-
 }

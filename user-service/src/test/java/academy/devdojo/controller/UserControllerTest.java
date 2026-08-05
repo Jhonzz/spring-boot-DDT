@@ -75,7 +75,7 @@ class UserControllerTest {
     @WithMockUser(authorities = "ADMIN")
     @Order(2)
     void findByName_ReturnsUserFoundInList_WhenUserIsFound() throws Exception {
-        var response = fileUtils.readResourceFile("user/get-user-ging-first-name-200.json");
+        var response = fileUtils.readResourceFile("user/get-user-hisoka-first-name-200.json");
         var firstName = "Ging";
         List<User> foundUser = userList.stream().filter(user -> user.getFirstName().equals(firstName)).toList();
 

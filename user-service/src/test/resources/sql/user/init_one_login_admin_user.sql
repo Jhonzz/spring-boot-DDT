@@ -1,0 +1,1 @@
+insert into devdojo_user (email,first_name,last_name,roles,password) values ('hisoka.morow@HXH.com','Hisoka','Morow','ADMIN','{bcrypt}$2a$10$BQzReMj0ysf6hE0Lr4Yhiu7kRdzy3nQr7Zj0XilOvFRQS2iHovmeC');

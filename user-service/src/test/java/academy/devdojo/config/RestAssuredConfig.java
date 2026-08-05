@@ -20,7 +20,7 @@ public class RestAssuredConfig {
     public RequestSpecification requestSpecificationRegularUser(){
          return RestAssured.given()
                  .baseUri(BASE_URI + port)
-                 .auth().preemptive().basic(REGULAR_USERNAME, PASSWORD);
+                 .auth().basic(REGULAR_USERNAME, PASSWORD);
          //"preemptive" do the authentication and the request, with just "auth" he tries, returns error 401 and try again authenticated
     }
 
@@ -28,7 +28,7 @@ public class RestAssuredConfig {
     public RequestSpecification requestSpecificationAdminUser(){
         return RestAssured.given()
                 .baseUri(BASE_URI + port)
-                .auth().preemptive().basic(ADMIN_USERNAME, PASSWORD);
+                .auth().basic(ADMIN_USERNAME, PASSWORD);
         //"preemptive" do the authentication and the request, with just "auth" he tries, returns error 401 and try again authenticated
     }
 }

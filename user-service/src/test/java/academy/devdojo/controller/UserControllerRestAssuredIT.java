@@ -3,6 +3,8 @@ package academy.devdojo.controller;
 import academy.devdojo.commons.FileUtils;
 import academy.devdojo.config.IntegrationTestConfig;
 import academy.devdojo.config.RestAssuredConfig;
+import academy.devdojo.domain.User;
+import academy.devdojo.exception.NotFoundException;
 import academy.devdojo.repository.UserRepository;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
@@ -19,6 +21,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.jdbc.Sql;
 
 import java.util.stream.Stream;
@@ -31,6 +35,8 @@ class UserControllerRestAssuredIT extends IntegrationTestConfig {
     private FileUtils fileUtils;
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private PasswordEncoder passwordEncoder; //to validate change of password in PUT tests
 
     @Autowired
     @Qualifier(value = "requestSpecificationRegularUser")
@@ -80,14 +86,14 @@ class UserControllerRestAssuredIT extends IntegrationTestConfig {
 
     @Test
     @DisplayName("GET v1/users?firstName=Ging returns a list with the found user")
-    @Sql(value = "/sql/user/init_one_user.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+    @Sql(value = "/sql/user/init_one_login_admin_user.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     @Sql(value = "/sql/user/clean_users.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
     @Order(2)
     void findByName_ReturnsUserFoundInList_WhenUserIsFound() {
         RestAssured.requestSpecification = requestSpecificationAdminUser;
 
-        var expectedResponse = fileUtils.readResourceFile("user/get-user-ging-first-name-200.json");
-        var firstName = "Ging";
+        var expectedResponse = fileUtils.readResourceFile("user/get-user-hisoka-first-name-200.json");
+        var firstName = "Hisoka";
 
         var response = RestAssured.given()
                 .when()
@@ -110,6 +116,8 @@ class UserControllerRestAssuredIT extends IntegrationTestConfig {
 
     @Test
     @DisplayName("GET v1/users?firstName=x returns a empty list")
+    @Sql(value = "/sql/user/init_one_login_admin_user.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+    @Sql(value = "/sql/user/clean_users.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
     @Order(3)
     void findByName_ReturnsEmptyList_WhenUserIsNotFound() {
         RestAssured.requestSpecification = requestSpecificationAdminUser;
@@ -199,7 +207,8 @@ class UserControllerRestAssuredIT extends IntegrationTestConfig {
 
     @Test
     @DisplayName("DELETE v1/users/1 removes an user")
-    @Sql(value = "/sql/user/init_one_user.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+    @Sql(value = "/sql/user/init_one_login_admin_user.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+    @Sql(value = "/sql/user/clean_users.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
     @Order(7)
     void deleteUser_RemovesUser_WhenSuccessful() {
         RestAssured.requestSpecification = requestSpecificationAdminUser;
@@ -217,6 +226,8 @@ class UserControllerRestAssuredIT extends IntegrationTestConfig {
 
     @Test
     @DisplayName("DELETE v1/users/99 throws 404 NotFound Exception")
+    @Sql(value = "/sql/user/init_one_login_admin_user.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+    @Sql(value = "/sql/user/clean_users.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
     @Order(8)
     void deleteUser_ThrowsNotFoundException_WhenUserDoesNotExists() {
         RestAssured.requestSpecification = requestSpecificationAdminUser;
@@ -243,9 +254,11 @@ class UserControllerRestAssuredIT extends IntegrationTestConfig {
         var request = fileUtils.readResourceFile("user/put-request-user-200.json");
         var expectedResponse = fileUtils.readResourceFile("user/put-response-user-200..json");
         var users = userRepository.findByFirstNameIgnoreCase("Meruem");
-        request = request.replace("1", users.getFirst().getId().toString());
+
+        var oldUser = users.getFirst();
 
         Assertions.assertThat(users).hasSize(1);
+        request = request.replace("1", users.getFirst().getId().toString());
 
         var response = RestAssured.given()
                 .contentType(ContentType.JSON).accept(ContentType.JSON)
@@ -260,10 +273,16 @@ class UserControllerRestAssuredIT extends IntegrationTestConfig {
         JsonAssertions.assertThatJson(response)
                 .whenIgnoringPaths("id")
                 .isEqualTo(expectedResponse);
+
+        var updatedUser = userRepository.findById(oldUser.getId()).orElseThrow(() -> new NotFoundException("user not found"));
+        var encryptedPassword = updatedUser.getPassword();
+        Assertions.assertThat(passwordEncoder.matches("freecss", encryptedPassword)).isTrue();
     }
 
     @Test
     @DisplayName("PUT v1/users throws NotFoundException")
+    @Sql(value = "/sql/user/init_one_user.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+    @Sql(value = "/sql/user/clean_users.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
     @Order(10)
     void update_ReturnsNotFoundException_WhenUserNotFound() {
         var request = fileUtils.readResourceFile("user/put-request-user-200.json");
@@ -307,6 +326,8 @@ class UserControllerRestAssuredIT extends IntegrationTestConfig {
     @ParameterizedTest
     @MethodSource("putUserBadRequestSource")
     @DisplayName("PUT v1/users returns bad request when fields are invalid")
+    @Sql(value = "/sql/user/init_one_user.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+    @Sql(value = "/sql/user/clean_users.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
     @Order(12)
     void update_ReturnsBadRequest_WhenFieldsAreInvalid(String requestFile, String responseFile) {
         var request = fileUtils.readResourceFile("user/%s".formatted(requestFile));

@@ -28,6 +28,7 @@ public class SecurityConfig {
 //    @Bean
 //    public UserDetailsService userDetailsService(PasswordEncoder passwordEncoder) {
 //        log.info(passwordEncoder.encode("ippo"));
+
 //        var user = User.withUsername("takamura")
 //                .password(passwordEncoder.encode("ippo"))
 //                .roles("USER")

@@ -34,7 +34,7 @@ import java.util.List;
 @Slf4j
 @RequiredArgsConstructor
 @Tag(name = "User API", description = "User related endpoints")
-@SecurityRequirement(name = "basicAuth")
+@SecurityRequirement(name = "basicAuth") //swagger auth
 public class UserController {
     private final UserService service;
     private final UserMapper mapper;

@@ -20,6 +20,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
@@ -32,7 +33,8 @@ import java.util.stream.Stream;
 
 @WebMvcTest(controllers = AnimeController.class)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-@ComponentScan(basePackages = {"academy.devdojo.anime", "academy.devdojo.commons"})
+@ComponentScan(basePackages = {"academy.devdojo.anime", "academy.devdojo.commons", "academy.devdojo.config"}) //when in different package needed add security in component scan
+@WithMockUser
 public class AnimeControllerTest {
     private static final String URL = "/v1/animes";
     @Autowired
@@ -77,6 +79,16 @@ public class AnimeControllerTest {
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().json(response));
+    }
+
+    @Test
+    @DisplayName("GET v1/animes returns 403 when role is not USER")
+    @Order(1)
+    @WithMockUser(roles = "ADMIN")
+    void findAll_ThrowsForbidden_WhenRoleIsNotUSER() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get(URL))
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(MockMvcResultMatchers.status().isForbidden());
     }
 
     @Test

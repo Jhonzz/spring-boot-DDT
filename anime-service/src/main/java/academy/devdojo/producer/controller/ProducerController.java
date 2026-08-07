@@ -28,7 +28,7 @@ public class ProducerController {
     private final ProducerService producerService;
 
     @GetMapping()
-    public ResponseEntity<List<ProducerGetResponse>> findAll(@RequestParam(required = false) String producerName) {
+    public ResponseEntity<List<ProducerGetResponse>> findAllProducers(@RequestParam(required = false) String producerName) {
 
         var producerList = producerService.findAll(producerName);
         var response = MAPPER.toProducerGetResponseList(producerList);
@@ -37,7 +37,7 @@ public class ProducerController {
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<ProducerGetResponse> findById(@PathVariable Long id) {
+    public ResponseEntity<ProducerGetResponse> findProducerById(@PathVariable Long id) {
 
         Producer producer = producerService.findByIdOrThrowNotFound(id);
 
@@ -46,7 +46,7 @@ public class ProducerController {
 
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE,
             headers = "x-api-key")
-    public ResponseEntity<ProducerPostResponse> save(@RequestBody @Valid ProducerPostRequest producerPostRequest, @RequestHeader HttpHeaders headers) {
+    public ResponseEntity<ProducerPostResponse> saveProducer(@RequestBody @Valid ProducerPostRequest producerPostRequest, @RequestHeader HttpHeaders headers) {
 
         Producer producer = MAPPER.toProducer(producerPostRequest);
 
@@ -58,7 +58,7 @@ public class ProducerController {
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity<Void> deleteById(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteProducerById(@PathVariable Long id) {
         log.info("Deleting producer by id: {}", id);
 
         producerService.delete(id);
@@ -66,7 +66,7 @@ public class ProducerController {
     }
 
     @PutMapping
-    public ResponseEntity<ProducerPutResponse> update(@RequestBody @Valid ProducerPutRequest request) {
+    public ResponseEntity<ProducerPutResponse> updateProducer(@RequestBody @Valid ProducerPutRequest request) {
         log.info("Trying update producer by id: {}", request.getId());
 
         Producer producer = MAPPER.toProducer(request);

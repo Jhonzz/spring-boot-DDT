@@ -31,7 +31,7 @@ public class AnimeController {
     private final AnimeService service;
 
     @GetMapping()
-    public ResponseEntity<List<AnimeGetResponse>> findAll(@RequestParam(required = false) String animeName) {
+    public ResponseEntity<List<AnimeGetResponse>> findAllAnimes(@RequestParam(required = false) String animeName) {
         log.info("Request received to list all animes, param name '{}'", animeName);
         var animes = service.findAll(animeName);
         var response = mapper.toAnimeResponseList(animes);
@@ -40,7 +40,7 @@ public class AnimeController {
     }
 
     @GetMapping("/paginated")
-    public ResponseEntity<Page<AnimeGetResponse>> findAllPaginated(@ParameterObject Pageable pageable) {
+    public ResponseEntity<Page<AnimeGetResponse>> findAllAnimesPaginated(@ParameterObject Pageable pageable) {
         log.info("Request received to list all animes paginated");
 
         var pageAnimeGetResponse = service.findAllPaginated(pageable).map(mapper::toAnimeGetResponse);
@@ -48,7 +48,7 @@ public class AnimeController {
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<AnimeGetResponse> findById(@PathVariable Long id) {
+    public ResponseEntity<AnimeGetResponse> findAnimeById(@PathVariable Long id) {
         log.debug("Request to find anime by id {}", id);
 
         Anime animeFound = service.findByIdOrThrowNotFoundException(id);
@@ -58,7 +58,7 @@ public class AnimeController {
     }
 
     @PostMapping()
-    public ResponseEntity<AnimePostResponse> save(@RequestBody @Valid AnimePostRequest request) {
+    public ResponseEntity<AnimePostResponse> saveAnime(@RequestBody @Valid AnimePostRequest request) {
         log.info("Trying create anime: {}", request.getName());
         var anime = mapper.toAnime(request);
 
@@ -79,7 +79,7 @@ public class AnimeController {
     }
 
     @PutMapping
-    public ResponseEntity<AnimePutResponse> update(@RequestBody @Valid AnimePutRequest request) {
+    public ResponseEntity<AnimePutResponse> updateAnime(@RequestBody @Valid AnimePutRequest request) {
         var animeToUpdate = mapper.toAnime(request);
         service.update(animeToUpdate);
         var response = mapper.toAnimePutResponse(animeToUpdate);

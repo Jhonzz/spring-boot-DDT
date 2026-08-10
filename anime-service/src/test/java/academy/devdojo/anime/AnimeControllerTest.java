@@ -155,7 +155,7 @@ public class AnimeControllerTest {
     @Test
     @DisplayName("POST v1/animes creates an Anime")
     @Order(6)
-    void save_CreatesAnime_WhenSucessful() throws Exception {
+    void save_CreatesAnime_WhenSuccessful() throws Exception {
         var request = fileUtils.readResourceFile("anime/post-request-anime-200.json");
         var response = fileUtils.readResourceFile("anime/post-response-anime-201.json");
         var animeToSave = animeUtils.newAnimeToSave();

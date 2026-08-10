@@ -1,17 +1,13 @@
 package academy.devdojo.producer.controller;
 
+import academy.devdojo.api.ProducerControllerApi;
 import academy.devdojo.domain.Producer;
-import academy.devdojo.producer.DTO.request.ProducerPostRequest;
-import academy.devdojo.producer.DTO.request.ProducerPutRequest;
-import academy.devdojo.producer.DTO.response.ProducerGetResponse;
-import academy.devdojo.producer.DTO.response.ProducerPostResponse;
-import academy.devdojo.producer.DTO.response.ProducerPutResponse;
+import academy.devdojo.dto.*;
 import academy.devdojo.producer.mapper.ProducerMapper;
 import academy.devdojo.producer.service.ProducerService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -23,7 +19,7 @@ import java.util.List;
 @RequestMapping("v1/producers")
 @RequiredArgsConstructor
 @Slf4j
-public class ProducerController {
+public class ProducerController implements ProducerControllerApi {
     private final ProducerMapper MAPPER;
     private final ProducerService producerService;
 
@@ -44,9 +40,11 @@ public class ProducerController {
         return ResponseEntity.ok(MAPPER.toProducerGetResponse(producer));
     }
 
-    @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE,
+    @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE,
+            consumes = MediaType.APPLICATION_JSON_VALUE,
             headers = "x-api-key")
-    public ResponseEntity<ProducerPostResponse> saveProducer(@RequestBody @Valid ProducerPostRequest producerPostRequest, @RequestHeader HttpHeaders headers) {
+    @Override
+    public ResponseEntity<ProducerPostResponse> saveProducer(@RequestBody @Valid ProducerPostRequest producerPostRequest) {
 
         Producer producer = MAPPER.toProducer(producerPostRequest);
 

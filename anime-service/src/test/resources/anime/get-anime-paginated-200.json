@@ -1,4 +1,9 @@
 {
+  "totalPages": 1,
+  "totalElements": 4,
+  "first": true,
+  "last": true,
+  "size": 4,
   "content": [
     {
       "id": 1,
@@ -17,29 +22,16 @@
       "name": "Dandadan"
     }
   ],
+  "number": 0,
+  "sort": [],
   "pageable": {
+    "offset": 0,
+    "sort": [],
+    "paged": true,
     "pageNumber": 0,
     "pageSize": 4,
-    "sort": {
-      "empty": true,
-      "sorted": false,
-      "unsorted": true
-    },
-    "offset": 0,
-    "paged": true,
     "unpaged": false
   },
-  "last": true,
-  "totalElements": 4,
-  "totalPages": 1,
-  "size": 4,
-  "number": 0,
-  "sort": {
-    "empty": true,
-    "sorted": false,
-    "unsorted": true
-  },
-  "first": true,
   "numberOfElements": 4,
   "empty": false
 }

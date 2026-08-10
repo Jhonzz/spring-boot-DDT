@@ -17,6 +17,9 @@
     <version>0.0.1-SNAPSHOT</version>
     <name>anime-service</name>
     <description>Projeto exemplo com Spring Boot</description>
+    <properties>
+        <anime-api-client.version>1.0-SNAPSHOT</anime-api-client.version>
+    </properties>
 
 
     <dependencies>
@@ -54,6 +57,14 @@
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-test</artifactId>
             <scope>test</scope>
+        </dependency>
+
+
+        <!--  Open API config-->
+        <dependency>
+            <groupId>academy.devdojo</groupId>
+            <artifactId>anime-api-client</artifactId>
+            <version>${anime-api-client.version}</version>
         </dependency>
 
     </dependencies>

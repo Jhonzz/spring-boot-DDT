@@ -41,8 +41,10 @@ paths:
       responses:
         '200':
           description: OK
-      security:
-        - basicAuth: []
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProducerPutResponse'
     post:
       tags:
         - producer-controller
@@ -102,8 +104,10 @@ paths:
       responses:
         '200':
           description: OK
-      security:
-        - basicAuth: []
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AnimePutResponse'
     post:
       tags:
         - anime-controller
@@ -252,6 +256,14 @@ components:
         name:
           type: string
           x-field-extra-annotation: "@jakarta.validation.constraints.NotBlank(message=\"Field 'name' is required\")"
+    ProducerPutResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
     AnimePutRequest:
       required:
         - id
@@ -261,10 +273,18 @@ components:
         id:
           type: integer
           format: int64
-          x-field-extra-annotation: "@jakarta.validation.constraints.NotNull(message=\"The field 'id' cannot be null\")"
+          x-field-extra-annotation: "@jakarta.validation.constraints.NotNull(message=\"Field 'id' is required when update anime\")"
         name:
           type: string
-          x-field-extra-annotation: "@jakarta.validation.constraints.NotBlank(message=\"The field 'name' is required\")"
+          x-field-extra-annotation: "@jakarta.validation.constraints.NotBlank(message=\"Field 'name' is required\")"
+    AnimePutResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
     ProducerPostRequest:
       required:
         - name
@@ -272,7 +292,7 @@ components:
       properties:
         name:
           type: string
-          x-field-extra-annotation: "@jakarta.validation.constraints.NotBlank(message=\"The field 'name' is required\")"
+          x-field-extra-annotation: "@jakarta.validation.constraints.NotBlank(message=\"Field 'name' is required\")"
     ProducerPostResponse:
       type: object
       properties:
@@ -288,7 +308,7 @@ components:
       properties:
         name:
           type: string
-          x-field-extra-annotation: "@jakarta.validation.constraints.NotBlank(message=\"The field 'name' is required\")"
+          x-field-extra-annotation: "@jakarta.validation.constraints.NotBlank(message=\"Field 'name' is required\")"
     AnimePostResponse:
       type: object
       properties:

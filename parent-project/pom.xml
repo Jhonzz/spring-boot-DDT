@@ -27,6 +27,11 @@
         <mysql-connector-j.version>9.0.0</mysql-connector-j.version>
         <json-unit-assertj.version>3.4.1</json-unit-assertj.version>
         <rest-assured.version>5.5.0</rest-assured.version>
+        <jib-maven-plugin.version>3.5.2</jib-maven-plugin.version>
+        <jib-maven-plugin.image>eclipse-temurin:21-jre</jib-maven-plugin.image>
+        <docker.repo.url>jhonzz7</docker.repo.url>
+        <docker.repo.project>${artifactId}</docker.repo.project>
+        <docker.image.name>${docker.repo.url}/${docker.repo.project}</docker.image.name>
     </properties>
     <dependencyManagement>
         <dependencies>
@@ -123,6 +128,27 @@
 
     <build>
         <plugins>
+
+            <plugin>
+                <groupId>com.google.cloud.tools</groupId>
+                <artifactId>jib-maven-plugin</artifactId>
+                <version>${jib-maven-plugin.version}</version>
+                <configuration>
+                    <from>
+                        <image>${jib-maven-plugin.image}</image>
+                    </from>
+                    <to>
+                        <image>${docker.image.name}</image> <!-- jhonpablo/anime-service -->
+                        <tags>
+                            <tag>${project.version}</tag> <!-- version 0.0.1-SNAPSHOT (project's version-->
+                        </tags>
+                    </to>
+                    <container>
+                        <format>OCI</format> <!-- interoperability (used to run in different OS)  -->
+                    </container>
+                </configuration>
+            </plugin>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>

@@ -14,16 +14,11 @@
     </parent>
 
     <artifactId>anime-service</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.2-SNAPSHOT</version>
     <name>anime-service</name>
     <description>Projeto exemplo com Spring Boot</description>
     <properties>
         <anime-api-client.version>1.0-SNAPSHOT</anime-api-client.version>
-        <jib-maven-plugin.version>3.5.2</jib-maven-plugin.version>
-        <jib-maven-plugin.image>eclipse-temurin:21-jre</jib-maven-plugin.image>
-        <docker.repo.url>jhonpablo</docker.repo.url>
-        <docker.repo.project>${artifactId}</docker.repo.project>
-        <docker.image.name>${docker.repo.url}/${docker.repo.project}</docker.image.name>
     </properties>
 
 
@@ -73,29 +68,4 @@
         </dependency>
 
     </dependencies>
-
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>com.google.cloud.tools</groupId>
-                <artifactId>jib-maven-plugin</artifactId>
-                <version>${jib-maven-plugin.version}</version>
-                <configuration>
-                    <from>
-                        <image>${jib-maven-plugin.image}</image>
-                    </from>
-                    <to>
-                        <image>${docker.image.name}</image> <!-- jhonpablo/anime-service -->
-                        <tags>
-                            <tag>${project.version}</tag> <!-- version 0.0.1-SNAPSHOT (project's version-->
-                        </tags>
-                    </to>
-                    <container>
-                        <format>OCI</format> <!-- interoperability (used to run in different OS)  -->
-                    </container>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
-
 </project>

@@ -16,7 +16,7 @@ services:
       - devdojo-db:/var/lib/mysql
 
   anime-service:
-    image: jhonpablo/anime-service:0.0.1-SNAPSHOT
+    image: jhonzz7/anime-service:0.0.2-SNAPSHOT
     container_name: anime-service
     ports:
       - "8080:8080"

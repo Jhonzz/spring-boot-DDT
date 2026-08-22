@@ -20,6 +20,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
@@ -37,11 +38,11 @@ public class ProfileControllerTest {
     private static final String URL = "/v1/profiles";
     @Autowired
     private MockMvc mockMvc;
-    @MockBean
+    @MockitoBean
     private ProfileRepository repository;
-    @MockBean
+    @MockitoBean
     private UserRepository userRepository; //creating bean to userController because component scan will throw exception
-    @MockBean
+    @MockitoBean
     private UserProfileRepository userProfileRepository;
     private List<Profile> profileList;
     @Autowired

@@ -19,6 +19,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
@@ -37,11 +38,11 @@ class UserControllerTest {
     private static final String URL = "/v1/users";
     @Autowired
     private MockMvc mockMvc;
-    @MockBean
+    @MockitoBean
     private UserRepository repository;
-    @MockBean
+    @MockitoBean
     private ProfileRepository profileRepository;
-    @MockBean
+    @MockitoBean
     private UserProfileRepository userProfileRepository;
     private List<User> userList;
     @Autowired
@@ -71,12 +72,12 @@ class UserControllerTest {
 
 
     @Test
-    @DisplayName("GET v1/users?firstName=Ging returns a list with the found user")
+    @DisplayName("GET v1/users?firstName=Hisoka returns a list with the found user")
     @WithMockUser(authorities = "ADMIN")
     @Order(2)
     void findByName_ReturnsUserFoundInList_WhenUserIsFound() throws Exception {
         var response = fileUtils.readResourceFile("user/get-user-hisoka-first-name-200.json");
-        var firstName = "Ging";
+        var firstName = "Hisoka";
         List<User> foundUser = userList.stream().filter(user -> user.getFirstName().equals(firstName)).toList();
 
         BDDMockito.when(repository.findByFirstNameIgnoreCase(firstName)).thenReturn(foundUser);

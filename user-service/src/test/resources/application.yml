@@ -19,3 +19,7 @@ server:
   error:
     include-binding-errors: always
     include-message: always
+
+brasil-api:
+  base-url: https://localhost:8085/api} #Assure to not call the integration in tests
+  cep-uri: /cep/v1/{cep}}
